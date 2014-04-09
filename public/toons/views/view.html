@@ -1,0 +1,14 @@
+<section data-ng-controller="ToonsController" data-ng-init="findOne()">
+    <span>{{toon.created | date:'medium'}}</span> /
+    <span>{{toon.user.name}}</span>
+    <h2>{{toon.title}}</h2>
+    <div data-ng-show="global.user._id == toon.user._id">
+        <a class="btn" href="/#!/toons/{{toon._id}}/edit">
+        	<i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn" data-ng-click="remove();">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+    <div>{{toon.content}}</div>
+</section>

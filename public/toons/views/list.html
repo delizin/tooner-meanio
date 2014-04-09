@@ -1,0 +1,11 @@
+<section data-ng-controller="ToonsController" data-ng-init="find()">
+	<ul class="toons unstyled">
+		<li data-ng-repeat="toon in toons">
+			<span>{{toon.created | date:'medium'}}</span> /
+			<span>{{toon.user.name}}</span>
+			<h2><a data-ng-href="#!/toons/{{toon._id}}">{{toon.title}}</a></h2>
+			<div>{{toon.content}}</div>
+		</li>
+	</ul>
+	<h1 data-ng-hide="!toons || toons.length">No toons yet. <br> Why don't you <a href="/#!/toons/create">Create One</a>?</h1>
+</section>
