@@ -75,10 +75,65 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         });
     };
 
+    $scope.changeStrength = function(val) {
+      if (val > 0) {
+        if ($scope.stats.currentStrength + val <= $scope.stats.maxStrength) {
+          $scope.stats.currentStrength += val;
+        }  
+      } else {
+        if ($scope.stats.currentStrength + val >= $scope.stats.baseStrength) {
+          $scope.stats.currentStrength += val;
+        }  
+      }
+    }
+
+    $scope.increaseStat = function(stat) {
+      var currentStat, maxStat;
+
+      switch(stat) {
+        case "strength":
+          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
+            $scope.stats.currentStrength += 1;
+          }
+
+          break;
+
+        case "dexterity":
+          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
+            $scope.stats.currentStrength += 1;
+          }
+          break;
+
+        case "constitution":
+          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
+            $scope.stats.currentStrength += 1;
+          }
+
+          break;
+
+        case "intelligence":
+          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
+            $scope.stats.currentStrength += 1;
+          }
+
+          break;
+        case "spirit":
+          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
+            $scope.stats.currentStrength += 1;
+          }
+
+          break;
+
+        default:
+          console.log("Error: tried to increase non-existent stat");
+      }
+    };
+
     $scope.changeStat = function(stat, current, base, max) {
       switch(stat) {
         case "strength":
           $scope.stats.currentStrength += current || 0;
+
           $scope.stats.baseStrength += base || 0;
           $scope.stats.maxStrength += max || 0;
           break;
@@ -105,5 +160,5 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         default:
           console.log("Error: tried to change non-existent stat");
     }
-  }
+  };
 }]);
