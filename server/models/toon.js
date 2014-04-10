@@ -43,7 +43,7 @@ var ToonSchema = new Schema({
     },
     race: {
       type: String,
-      default: "human"
+      default: ""
     },
     baseClass: {
       type: String,
@@ -67,23 +67,7 @@ var ToonSchema = new Schema({
     },
     stats: {
       type: Object,
-      default: {
-        baseStrength: 35,
-        baseDexterity: 35,
-        baseConstitution: 35,
-        baseIntelligence: 35,
-        baseSpirit: 35,
-        maxStrength: 100,
-        maxDexterity: 100,
-        maxConstitution: 100,
-        maxIntelligence: 100,
-        maxSpirit: 100,
-        currentStrength: 35,
-        currentDexterity: 35,
-        currentConstitution: 35,
-        currentIntelligence: 35,
-        currentSpirit: 35
-      }
+      default: {}
     },
 });
 

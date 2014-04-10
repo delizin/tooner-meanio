@@ -2,6 +2,23 @@
 
 angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'Toons', function ($scope, $stateParams, $location, Global, Toons) {
     $scope.global = Global;
+    $scope.stats = {
+      baseStrength: 35,
+      baseDexterity: 35,
+      baseConstitution: 35,
+      baseIntelligence: 35,
+      baseSpirit: 35,
+      maxStrength: 100,
+      maxDexterity: 100,
+      maxConstitution: 100,
+      maxIntelligence: 100,
+      maxSpirit: 100,
+      currentStrength: 35,
+      currentDexterity: 35,
+      currentConstitution: 35,
+      currentIntelligence: 35,
+      currentSpirit: 35
+    }
 
     $scope.create = function() {
         var toon = new Toons({
@@ -13,7 +30,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         });
 
         this.title = '';
-        this.content = '';
+        this.content = '';                
     };
 
     $scope.remove = function(toon) {
@@ -57,4 +74,36 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
             $scope.toon = toon;
         });
     };
+
+    $scope.changeStat = function(stat, current, base, max) {
+      switch(stat) {
+        case "strength":
+          $scope.stats.currentStrength += current || 0;
+          $scope.stats.baseStrength += base || 0;
+          $scope.stats.maxStrength += max || 0;
+          break;
+        case "dexterity":
+          $scope.stats.currentDexterity += current || 0;
+          $scope.stats.baseDexterity += base || 0;
+          $scope.stats.maxDexterity += max || 0;
+          break;
+        case "constitution":
+          $scope.stats.currentConstitution += current || 0;
+          $scope.stats.baseConstitution += base || 0;
+          $scope.stats.maxConstitution += max || 0;
+          break;
+        case "intelligence":
+          $scope.stats.currentIntelligence += current || 0;
+          $scope.stats.baseIntelligence += base || 0;
+          $scope.stats.maxIntelligence += max || 0;
+          break;
+        case "spirit":
+          $scope.stats.currentSpirit += current || 0;
+          $scope.stats.baseSpirit += base || 0;
+          $scope.stats.maxSpirit += max || 0;
+          break;
+        default:
+          console.log("Error: tried to change non-existent stat");
+    }
+  }
 }]);
