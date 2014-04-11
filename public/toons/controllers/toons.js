@@ -75,90 +75,47 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         });
     };
 
-    $scope.changeStrength = function(val) {
-      if (val > 0) {
-        if ($scope.stats.currentStrength + val <= $scope.stats.maxStrength) {
-          $scope.stats.currentStrength += val;
-        }  
-      } else {
-        if ($scope.stats.currentStrength + val >= $scope.stats.baseStrength) {
-          $scope.stats.currentStrength += val;
-        }  
-      }
-    }
-
-    $scope.increaseStat = function(stat) {
-      var currentStat, maxStat;
-
+    $scope.increaseStat = function(stat, val) {
       switch(stat) {
         case "strength":
-          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
-            $scope.stats.currentStrength += 1;
-          }
-
+          if ($scope.stats.currentStrength + val <= $scope.stats.maxStrength) $scope.stats.currentStrength += val;
           break;
-
         case "dexterity":
-          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
-            $scope.stats.currentStrength += 1;
-          }
+          if ($scope.stats.currentDexterity + val <= $scope.stats.maxDexterity) $scope.stats.currentDexterity += val;
           break;
-
         case "constitution":
-          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
-            $scope.stats.currentStrength += 1;
-          }
-
+          if ($scope.stats.currentConstitution + val <= $scope.stats.maxConstitution) $scope.stats.currentConstitution += val;
           break;
-
         case "intelligence":
-          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
-            $scope.stats.currentStrength += 1;
-          }
-
+          if ($scope.stats.currentIntelligence + val <= $scope.stats.maxIntelligence) $scope.stats.currentIntelligence += val;
           break;
         case "spirit":
-          if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
-            $scope.stats.currentStrength += 1;
-          }
-
+          if ($scope.stats.currentSpirit + val <= $scope.stats.maxSpirit) $scope.stats.currentSpirit += val;
           break;
-
         default:
           console.log("Error: tried to increase non-existent stat");
       }
     };
 
-    $scope.changeStat = function(stat, current, base, max) {
+    $scope.decreaseStat = function(stat, val) {
       switch(stat) {
         case "strength":
-          $scope.stats.currentStrength += current || 0;
-
-          $scope.stats.baseStrength += base || 0;
-          $scope.stats.maxStrength += max || 0;
+          if ($scope.stats.currentStrength - val >= $scope.stats.baseStrength) $scope.stats.currentStrength -= val;
           break;
         case "dexterity":
-          $scope.stats.currentDexterity += current || 0;
-          $scope.stats.baseDexterity += base || 0;
-          $scope.stats.maxDexterity += max || 0;
+          if ($scope.stats.currentDexterity + val <= $scope.stats.maxDexterity) $scope.stats.currentDexterity -= val;
           break;
         case "constitution":
-          $scope.stats.currentConstitution += current || 0;
-          $scope.stats.baseConstitution += base || 0;
-          $scope.stats.maxConstitution += max || 0;
+          if ($scope.stats.currentConstitution + val <= $scope.stats.maxConstitution) $scope.stats.currentConstitution -= val;
           break;
         case "intelligence":
-          $scope.stats.currentIntelligence += current || 0;
-          $scope.stats.baseIntelligence += base || 0;
-          $scope.stats.maxIntelligence += max || 0;
+          if ($scope.stats.currentIntelligence + val <= $scope.stats.maxIntelligence) $scope.stats.currentIntelligence -= val;
           break;
         case "spirit":
-          $scope.stats.currentSpirit += current || 0;
-          $scope.stats.baseSpirit += base || 0;
-          $scope.stats.maxSpirit += max || 0;
+          if ($scope.stats.currentSpirit + val <= $scope.stats.maxSpirit) $scope.stats.currentSpirit -= val;
           break;
         default:
-          console.log("Error: tried to change non-existent stat");
-    }
-  };
+          console.log("Error: tried to increase non-existent stat");
+      }  
+    };
 }]);

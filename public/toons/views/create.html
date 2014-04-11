@@ -4,8 +4,8 @@
       <ul class="list-unstyled">
         <li>
           Strength {{stats.currentStrength}} / {{stats.maxStrength}} 
-          <span class="glyphicon glyphicon-plus" ng-click="changeStrength(1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="changeStrength(-1)"></span>
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('strength', 1)"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('strength', 1)"></span>
         </li>
         <li>
           Dexterity {{stats.currentDexterity}} / {{stats.maxDexterity}} 
