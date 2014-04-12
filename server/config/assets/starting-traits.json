@@ -1,5 +1,4 @@
-{
-    "startingTraits": [{
+    [{
         "name": "Agile",
         "cost": 6,
         "category": "dexterity",
@@ -969,4 +968,3 @@
             }]
         }]
     }]
-}

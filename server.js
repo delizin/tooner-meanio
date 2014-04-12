@@ -31,5 +31,21 @@ console.log('Express app started on port ' + config.port);
 // Initializing logger
 logger.init(app, passport, mongoose);
 
+//Seed hearthstone cards
+mongoose.connection.once('open', function() {
+  console.log("Database open");
+
+  if (config.seedData) {
+    require('./server/config/seed.js');
+
+    var Trait = mongoose.model('Trait');
+
+    Trait.remove().exec()
+    .then(function() { Trait.seed(require('./server/config/assets/starting-traits.json')); });
+
+    console.log("Finished seeding");
+  }
+});
+
 // Expose app
 exports = module.exports = app;
