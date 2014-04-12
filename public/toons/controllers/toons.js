@@ -2,23 +2,29 @@
 
 angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'Toons', function ($scope, $stateParams, $location, Global, Toons) {
     $scope.global = Global;
-    $scope.stats = {
-      baseStrength: 35,
-      baseDexterity: 35,
-      baseConstitution: 35,
-      baseIntelligence: 35,
-      baseSpirit: 35,
-      maxStrength: 100,
-      maxDexterity: 100,
-      maxConstitution: 100,
-      maxIntelligence: 100,
-      maxSpirit: 100,
-      currentStrength: 35,
-      currentDexterity: 35,
-      currentConstitution: 35,
-      currentIntelligence: 35,
-      currentSpirit: 35
-    }
+    init();
+
+    function init() {
+      $scope.stats = {
+        baseStrength: 35,
+        baseDexterity: 35,
+        baseConstitution: 35,
+        baseIntelligence: 35,
+        baseSpirit: 35,
+        maxStrength: 100,
+        maxDexterity: 100,
+        maxConstitution: 100,
+        maxIntelligence: 100,
+        maxSpirit: 100,
+        currentStrength: 35,
+        currentDexterity: 35,
+        currentConstitution: 35,
+        currentIntelligence: 35,
+        currentSpirit: 35
+      }
+
+      $scope.remainingPoints =  $scope.maxPoints = 55;
+    };
 
     $scope.create = function() {
         var toon = new Toons({
@@ -76,28 +82,35 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     };
 
     $scope.increaseStat = function(stat, val) {
-      switch(stat) {
-        case "strength":
-          if ($scope.stats.currentStrength + val <= $scope.stats.maxStrength) $scope.stats.currentStrength += val;
-          break;
-        case "dexterity":
-          if ($scope.stats.currentDexterity + val <= $scope.stats.maxDexterity) $scope.stats.currentDexterity += val;
-          break;
-        case "constitution":
-          if ($scope.stats.currentConstitution + val <= $scope.stats.maxConstitution) $scope.stats.currentConstitution += val;
-          break;
-        case "intelligence":
-          if ($scope.stats.currentIntelligence + val <= $scope.stats.maxIntelligence) $scope.stats.currentIntelligence += val;
-          break;
-        case "spirit":
-          if ($scope.stats.currentSpirit + val <= $scope.stats.maxSpirit) $scope.stats.currentSpirit += val;
-          break;
-        default:
-          console.log("Error: tried to increase non-existent stat");
+      if ($scope.remainingPoints > 0) {
+        $scope.remainingPoints -= 1;
+
+        switch(stat) {
+          case "strength":
+            if ($scope.stats.currentStrength + val <= $scope.stats.maxStrength) $scope.stats.currentStrength += val;
+            break;
+          case "dexterity":
+            if ($scope.stats.currentDexterity + val <= $scope.stats.maxDexterity) $scope.stats.currentDexterity += val;
+            break;
+          case "constitution":
+            if ($scope.stats.currentConstitution + val <= $scope.stats.maxConstitution) $scope.stats.currentConstitution += val;
+            break;
+          case "intelligence":
+            if ($scope.stats.currentIntelligence + val <= $scope.stats.maxIntelligence) $scope.stats.currentIntelligence += val;
+            break;
+          case "spirit":
+            if ($scope.stats.currentSpirit + val <= $scope.stats.maxSpirit) $scope.stats.currentSpirit += val;
+            break;
+          default:
+            console.log("Error: tried to increase non-existent stat");
+        }  
       }
     };
 
     $scope.decreaseStat = function(stat, val) {
+      if ($scope.remainingPoints < $scope.maxPoints) {
+        $scope.remainingPoints += 1;
+
       switch(stat) {
         case "strength":
           if ($scope.stats.currentStrength - val >= $scope.stats.baseStrength) $scope.stats.currentStrength -= val;
@@ -115,7 +128,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           if ($scope.stats.currentSpirit + val <= $scope.stats.maxSpirit) $scope.stats.currentSpirit -= val;
           break;
         default:
-          console.log("Error: tried to increase non-existent stat");
-      }  
+          console.log("Error: tried to decrease non-existent stat");
+        }  
+      }
     };
 }]);
