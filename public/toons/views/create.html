@@ -1,6 +1,13 @@
 <section data-ng-controller="ToonsController">
 	<div class="row">
     <div class="stats">
+      <ul class="list-inline">
+        <li data-ng-repeat="class in baseClasses">
+          <span class="base-class" ng-class="{activeBaseClass: selectedClass.name == class.name}" ng-click="chooseBaseClass(class)">
+            {{class.name}}
+          </span>
+        </li>
+      </ul>
       <ul class="list-unstyled">
         <li>
           Strength {{stats.currentStrength}} / {{stats.maxStrength}} 
@@ -9,26 +16,26 @@
         </li>
         <li>
           Dexterity {{stats.currentDexterity}} / {{stats.maxDexterity}} 
-          <span class="glyphicon glyphicon-plus" ng-click="changeStat('dexterity', 1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="changeStat('dexterity', -1)"></span>
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('dexterity', 1)"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('dexterity', 1)"></span>
         </li>
         <li>
           Constitution {{stats.currentConstitution}} / {{stats.maxConstitution}} 
-          <span class="glyphicon glyphicon-plus" ng-click="changeStat('constitution', 1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="changeStat('constitution', -1)"></span>
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('constitution', 1)"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('constitution', 1)"></span>
         </li>
         <li>
           Intelligence {{stats.currentIntelligence}} / {{stats.maxIntelligence}} 
-          <span class="glyphicon glyphicon-plus" ng-click="changeStat('intelligence', 1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="changeStat('intelligence', -1)"></span>
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('intelligence', 1)"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('intelligence', 1)"></span>
         </li>
         <li>
           Spirit {{stats.currentSpirit}} / {{stats.maxSpirit}} 
-          <span class="glyphicon glyphicon-plus" ng-click="changeStat('spirit', 1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="changeStat('spirit', -1)"></span>
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('spirit', 1)"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('spirit', 1)"></span>
         </li>
       </ul>
-      <p>Points Remaining: {{remainingPoints}} {{maxPoints}}
+      <p>Points Remaining: {{remainingPoints}} / {{maxPoints}}</p>
     </div>
   </div>
 </section>

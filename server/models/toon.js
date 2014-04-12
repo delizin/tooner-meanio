@@ -43,15 +43,15 @@ var ToonSchema = new Schema({
     },
     race: {
       type: String,
-      default: ""
+      default: ''
     },
     baseClass: {
       type: String,
-      default: ""
+      default: ''
     },
     prestigeClass: {
       type: String,
-      default: ""
+      default: ''
     },
     startingTraits: {
       type: Array,

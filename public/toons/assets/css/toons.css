@@ -5,3 +5,17 @@
 .glyphicon {
   cursor: pointer;
 }
+
+.base-class {
+  background-color: #ABD3DD;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.base-class:hover {
+  background-color: #39BDFF;
+}
+
+.activeBaseClass {
+  background-color: #E0882F;
+}
