@@ -113,7 +113,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     };
 
     $scope.chooseBaseClass = function(baseClass) {
-      //Subtract current stats
+      //Subtract current stats before applying new class
       if ($scope.selectedClass) {
         changeBaseStats('strength', $scope.selectedClass.grantedBaseStr * -1)
         changeBaseStats('dexterity', $scope.selectedClass.grantedBaseDex * -1)
@@ -162,25 +162,38 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       }
     };
 
-    $scope.increaseStat = function(stat, val) {
+    $scope.increaseStat = function(stat) {
       if ($scope.remainingPoints > 0) {
-        $scope.remainingPoints -= 1;
-
         switch (stat) {
           case 'strength':
-            if ($scope.stats.currentStrength + val <= $scope.stats.maxStrength) $scope.stats.currentStrength += val;
+            if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
+              $scope.stats.currentStrength += 1;
+              $scope.remainingPoints -= 1;
+            }
             break;
           case 'dexterity':
-            if ($scope.stats.currentDexterity + val <= $scope.stats.maxDexterity) $scope.stats.currentDexterity += val;
+            if ($scope.stats.currentDexterity < $scope.stats.maxDexterity) {
+              $scope.stats.currentDexterity += 1;
+              $scope.remainingPoints -= 1;
+            }
             break;
           case 'constitution':
-            if ($scope.stats.currentConstitution + val <= $scope.stats.maxConstitution) $scope.stats.currentConstitution += val;
+            if ($scope.stats.currentConstitution < $scope.stats.maxConstitution) {
+              $scope.stats.currentConstitution += 1;
+              $scope.remainingPoints -= 1;
+            }
             break;
           case 'intelligence':
-            if ($scope.stats.currentIntelligence + val <= $scope.stats.maxIntelligence) $scope.stats.currentIntelligence += val;
+            if ($scope.stats.currentIntelligence < $scope.stats.maxIntelligence) {
+              $scope.stats.currentIntelligence += 1;
+              $scope.remainingPoints -= 1; 
+            }
             break;
           case 'spirit':
-            if ($scope.stats.currentSpirit + val <= $scope.stats.maxSpirit) $scope.stats.currentSpirit += val;
+            if ($scope.stats.currentSpirit < $scope.stats.maxSpirit) {
+              $scope.stats.currentSpirit += 1;
+              $scope.remainingPoints -= 1;
+            }
             break;
           default:
             console.log('Error: tried to increase non-existent stat');
@@ -188,25 +201,38 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       }
     };
 
-    $scope.decreaseStat = function(stat, val) {
+    $scope.decreaseStat = function(stat) {
       if ($scope.remainingPoints < $scope.maxPoints) {
-        $scope.remainingPoints += 1;
-
         switch (stat) {
           case 'strength':
-            if ($scope.stats.currentStrength - val >= $scope.stats.baseStrength) $scope.stats.currentStrength -= val;
+            if ($scope.stats.currentStrength > $scope.stats.baseStrength) {
+              $scope.stats.currentStrength -= 1;
+              $scope.remainingPoints += 1;
+            }
             break;
           case 'dexterity':
-            if ($scope.stats.currentDexterity + val <= $scope.stats.maxDexterity) $scope.stats.currentDexterity -= val;
+            if ($scope.stats.currentDexterity > $scope.stats.baseDexterity) {
+              $scope.stats.currentDexterity -= 1;
+              $scope.remainingPoints += 1;
+            }
             break;
           case 'constitution':
-            if ($scope.stats.currentConstitution + val <= $scope.stats.maxConstitution) $scope.stats.currentConstitution -= val;
+            if ($scope.stats.currentConstitution > $scope.stats.baseConstitution) {
+              $scope.stats.currentConstitution -= 1;
+              $scope.remainingPoints += 1;
+            }
             break;
           case 'intelligence':
-            if ($scope.stats.currentIntelligence + val <= $scope.stats.maxIntelligence) $scope.stats.currentIntelligence -= val;
+            if ($scope.stats.currentIntelligence > $scope.stats.baseIntelligence) {
+              $scope.stats.currentIntelligence -= 1;
+              $scope.remainingPoints += 1;
+            }
             break;
           case 'spirit':
-            if ($scope.stats.currentSpirit + val <= $scope.stats.maxSpirit) $scope.stats.currentSpirit -= val;
+            if ($scope.stats.currentSpirit > $scope.stats.baseSpirit) {
+              $scope.stats.currentSpirit -= 1;
+              $scope.remainingPoints += 1;
+            }
             break;
           default:
             console.log('Error: tried to decrease non-existent stat');

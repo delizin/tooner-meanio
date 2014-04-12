@@ -10,29 +10,29 @@
       </ul>
       <ul class="list-unstyled">
         <li>
-          Strength {{stats.currentStrength}} / {{stats.maxStrength}} 
-          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('strength', 1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('strength', 1)"></span>
+          Strength {{stats.baseStrength}} / <strong>{{stats.currentStrength}}</strong> / {{stats.maxStrength}} 
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('strength')"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('strength')"></span>
         </li>
         <li>
-          Dexterity {{stats.currentDexterity}} / {{stats.maxDexterity}} 
-          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('dexterity', 1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('dexterity', 1)"></span>
+          Dexterity {{stats.baseDexterity}} / <strong>{{stats.currentDexterity}}</strong> / {{stats.maxDexterity}} 
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('dexterity')"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('dexterity')"></span>
         </li>
         <li>
-          Constitution {{stats.currentConstitution}} / {{stats.maxConstitution}} 
-          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('constitution', 1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('constitution', 1)"></span>
+          Constitution {{stats.baseConstitution}} / <strong>{{stats.currentConstitution}}</strong> / {{stats.maxConstitution}} 
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('constitution')"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('constitution')"></span>
         </li>
         <li>
-          Intelligence {{stats.currentIntelligence}} / {{stats.maxIntelligence}} 
-          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('intelligence', 1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('intelligence', 1)"></span>
+          Intelligence {{stats.baseIntelligence}} / <strong>{{stats.currentIntelligence}}</strong> / {{stats.maxIntelligence}} 
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('intelligence')"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('intelligence')"></span>
         </li>
         <li>
-          Spirit {{stats.currentSpirit}} / {{stats.maxSpirit}} 
-          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('spirit', 1)"></span> 
-          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('spirit', 1)"></span>
+          Spirit {{stats.baseSpirit}} / <strong>{{stats.currentSpirit}}</strong> / {{stats.maxSpirit}} 
+          <span class="glyphicon glyphicon-plus" ng-click="increaseStat('spirit')"></span> 
+          <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('spirit')"></span>
         </li>
       </ul>
       <p>Points Remaining: {{remainingPoints}} / {{maxPoints}}</p>
