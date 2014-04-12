@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'Toons', function ($scope, $stateParams, $location, Global, Toons) {
+angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'Toons',
+  function($scope, $stateParams, $location, Global, Toons) {
     $scope.global = Global;
     init();
 
@@ -23,69 +24,68 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         currentSpirit: 35
       }
 
-      $scope.remainingPoints =  $scope.maxPoints = 55;
+      $scope.remainingPoints = $scope.maxPoints = 55;
     };
 
     $scope.create = function() {
-        var toon = new Toons({
-            title: this.title,
-            content: this.content
-        });
-        toon.$save(function(response) {
-            $location.path('toons/' + response._id);
-        });
+      var toon = new Toons({
+        title: this.title,
+        content: this.content
+      });
+      toon.$save(function(response) {
+        $location.path('toons/' + response._id);
+      });
 
-        this.title = '';
-        this.content = '';                
+      this.title = '';
+      this.content = '';
     };
 
     $scope.remove = function(toon) {
-        if (toon) {
-            toon.$remove();
+      if (toon) {
+        toon.$remove();
 
-            for (var i in $scope.toons) {
-                if ($scope.toons[i] === toon) {
-                    $scope.toons.splice(i, 1);
-                }
-            }
+        for (var i in $scope.toons) {
+          if ($scope.toons[i] === toon) {
+            $scope.toons.splice(i, 1);
+          }
         }
-        else {
-            $scope.toon.$remove();
-            $location.path('toons');
-        }
+      } else {
+        $scope.toon.$remove();
+        $location.path('toons');
+      }
     };
 
     $scope.update = function() {
-        var toon = $scope.toon;
-        if (!toon.updated) {
-            toon.updated = [];
-        }
-        toon.updated.push(new Date().getTime());
+      var toon = $scope.toon;
+      if (!toon.updated) {
+        toon.updated = [];
+      }
+      toon.updated.push(new Date().getTime());
 
-        toon.$update(function() {
-            $location.path('toons/' + toon._id);
-        });
+      toon.$update(function() {
+        $location.path('toons/' + toon._id);
+      });
     };
 
     $scope.find = function() {
-        Toons.query(function(toons) {
-            $scope.toons = toons;
-        });
+      Toons.query(function(toons) {
+        $scope.toons = toons;
+      });
     };
 
     $scope.findOne = function() {
-        Toons.get({
-            toonId: $stateParams.toonId
-        }, function(toon) {
-            $scope.toon = toon;
-        });
+      Toons.get({
+        toonId: $stateParams.toonId
+      }, function(toon) {
+        $scope.toon = toon;
+      });
     };
 
     $scope.increaseStat = function(stat, val) {
       if ($scope.remainingPoints > 0) {
         $scope.remainingPoints -= 1;
 
-        switch(stat) {
+        switch (stat) {
           case "strength":
             if ($scope.stats.currentStrength + val <= $scope.stats.maxStrength) $scope.stats.currentStrength += val;
             break;
@@ -103,7 +103,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
             break;
           default:
             console.log("Error: tried to increase non-existent stat");
-        }  
+        }
       }
     };
 
@@ -111,25 +111,26 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       if ($scope.remainingPoints < $scope.maxPoints) {
         $scope.remainingPoints += 1;
 
-      switch(stat) {
-        case "strength":
-          if ($scope.stats.currentStrength - val >= $scope.stats.baseStrength) $scope.stats.currentStrength -= val;
-          break;
-        case "dexterity":
-          if ($scope.stats.currentDexterity + val <= $scope.stats.maxDexterity) $scope.stats.currentDexterity -= val;
-          break;
-        case "constitution":
-          if ($scope.stats.currentConstitution + val <= $scope.stats.maxConstitution) $scope.stats.currentConstitution -= val;
-          break;
-        case "intelligence":
-          if ($scope.stats.currentIntelligence + val <= $scope.stats.maxIntelligence) $scope.stats.currentIntelligence -= val;
-          break;
-        case "spirit":
-          if ($scope.stats.currentSpirit + val <= $scope.stats.maxSpirit) $scope.stats.currentSpirit -= val;
-          break;
-        default:
-          console.log("Error: tried to decrease non-existent stat");
-        }  
+        switch (stat) {
+          case "strength":
+            if ($scope.stats.currentStrength - val >= $scope.stats.baseStrength) $scope.stats.currentStrength -= val;
+            break;
+          case "dexterity":
+            if ($scope.stats.currentDexterity + val <= $scope.stats.maxDexterity) $scope.stats.currentDexterity -= val;
+            break;
+          case "constitution":
+            if ($scope.stats.currentConstitution + val <= $scope.stats.maxConstitution) $scope.stats.currentConstitution -= val;
+            break;
+          case "intelligence":
+            if ($scope.stats.currentIntelligence + val <= $scope.stats.maxIntelligence) $scope.stats.currentIntelligence -= val;
+            break;
+          case "spirit":
+            if ($scope.stats.currentSpirit + val <= $scope.stats.maxSpirit) $scope.stats.currentSpirit -= val;
+            break;
+          default:
+            console.log("Error: tried to decrease non-existent stat");
+        }
       }
     };
-}]);
+  }
+]);
