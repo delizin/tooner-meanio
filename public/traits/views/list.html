@@ -1,0 +1,8 @@
+<section data-ng-controller="TraitsController" data-ng-init="find()">
+	<ul class="traits unstyled">
+		<li data-ng-repeat="trait in traits">
+			<span>{{trait.created | date:'medium'}}</span> /
+			<h2><a data-ng-href="#!/traits/{{trait._id}}">{{trait.name}}</a></h2>
+		</li>
+	</ul>
+</section>
