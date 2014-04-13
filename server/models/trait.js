@@ -11,10 +11,6 @@ var mongoose = require('mongoose'),
  * Trait Schema
  */
 var TraitSchema = new Schema({
-  created: {
-    type: Date,
-    default: Date.now
-  },
   name: {
     type: String,
     default: '',
@@ -89,9 +85,9 @@ var TraitSchema = new Schema({
     type: Number,
     default: 0
   },
-  requiredClasses: {
-    type: Object,
-    default: {}
+  availableBaseClasses: {
+    type: Array,
+    default: []
   }
 });
 

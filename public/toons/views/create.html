@@ -1,9 +1,12 @@
 <section data-ng-controller="ToonsController" data-ng-init="findComponents()">
 	<div class="row">
     <div class="stats">
+      <ul class="list-unstyled">
+        <li data-ng-repeat="trait in selectedTraits">{{trait}}</li>
+      </ul>
       <ul class="list-inline">
         <li data-ng-repeat="class in baseClasses">
-          <span class="base-class" ng-class="{activeBaseClass: selectedClass.name == class.name}" ng-click="chooseBaseClass(class)">
+          <span class="base-class" ng-class="{activeBaseClass: selectedBaseClass.name === class.name}" ng-click="chooseBaseClass(class)">
             {{class.name}}
           </span>
         </li>
@@ -36,10 +39,13 @@
         </li>
       </ul>
       <p>Points Remaining: {{remainingPoints}} / {{maxPoints}}</p>
-      <div>
-        <ul class="list-unstyled">
+      <div ng-show="selectedBaseClass">
+        <ul class="list-unstyled trait-list">
           <li data-ng-repeat="trait in traits | orderBy: 'name'">
-            {{trait.name}}
+            <span class="trait" ng-class="{unavailable: !trait.available}" ng-click="selectTrait(trait)">
+              {{trait.name}}
+            </span>
+            <span ng-show="trait.selected"> Selected</span>
           </li>
         </ul>
       </div>      

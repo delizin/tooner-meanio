@@ -19,3 +19,25 @@
 .activeBaseClass {
   background-color: #E0882F;
 }
+
+.trait-list li {
+  margin-bottom: 10px;
+}
+
+.trait {
+  background-color: #ABD3DD;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.trait:hover {
+  background-color: #39BDFF;
+}
+
+.selectedTrait {
+  background-color: #E0882F;
+}
+
+.unavailable {
+  background-color: #FF3B3B;
+}
