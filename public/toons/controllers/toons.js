@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'Toons',
-  function($scope, $stateParams, $location, Global, Toons) {
+angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'Traits', 'Toons',
+  function($scope, $stateParams, $location, Global, Traits, Toons) {
     $scope.global = Global;
     init();
 
@@ -111,6 +111,12 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         $scope.toon = toon;
       });
     };
+
+    $scope.findComponents = function() {
+      Traits.query(function(traits) {
+        $scope.traits = traits;
+      });
+    }
 
     $scope.chooseBaseClass = function(baseClass) {
       //Subtract current stats before applying new class
