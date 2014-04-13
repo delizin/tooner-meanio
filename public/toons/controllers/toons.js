@@ -138,9 +138,9 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         changeBaseStats('constitution', baseClass.grantedBaseCon);
         changeBaseStats('intelligence', baseClass.grantedBaseInt);
         changeBaseStats('spirit', baseClass.grantedBaseSpi);
-      }
 
-      getAvailableTraits();
+        getAvailableTraits();
+      }
     };
 
     function getAvailableTraits() {
