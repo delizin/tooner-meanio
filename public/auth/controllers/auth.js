@@ -27,31 +27,23 @@ angular.module('mean.controllers.login', [])
         $scope.user = {};
 
         $scope.register = function(){
-            $scope.usernameError = null;
             $scope.registerError = null;
             $http.post('/register', {
                 email: $scope.user.email,
                 password: $scope.user.password,
-                confirmPassword: $scope.user.confirmPassword,
-                username: $scope.user.username,
-                name: $scope.user.fullname
+                confirmPassword: $scope.user.confirmPassword
             })
                 .success(function(){
                     // authentication OK
                     $scope.registerError = 0;
-                    $rootScope.user = $scope.user.fullname;
+                    $rootScope.user = $scope.user.email;
                     $rootScope.$emit('loggedin');
                     $location.url('/');
 
                 })
                 .error(function(error){
                     // Error: authentication failed
-                    if (error === 'Username already taken') {
-                        $scope.usernameError = error;
-                    }
-                    else {
-                        $scope.registerError = error;
-                    }
+                    $scope.registerError = error;
 
 
                 });

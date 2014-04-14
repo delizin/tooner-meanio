@@ -2,7 +2,6 @@
     <div ng-repeat="error in registerError">
         <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
     </div>
-    <div class="alert alert-danger animated fadeIn" ng-show="usernameError">{{usernameError}}</div>
 
     <h1>Register</h1>
     <form ng-submit="register()" class="signup form-horizontal">

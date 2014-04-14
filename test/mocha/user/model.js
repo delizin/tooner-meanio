@@ -15,9 +15,7 @@ describe('<Unit Test>', function() {
     describe('Model User:', function() {
         before(function(done) {
             user = new User({
-                name: 'Full name',
                 email: 'test@test.com',
-                username: 'user',
                 password: 'password',
                 provider: 'local'
             });
@@ -46,13 +44,6 @@ describe('<Unit Test>', function() {
                 });
             });
 
-            it('should show an error when try to save without name', function(done) {
-                user.name = '';
-                return user.save(function(err) {
-                    should.exist(err);
-                    done();
-                });
-            });
         });
 
         after(function(done) {

@@ -2,7 +2,6 @@
 	<ul class="toons unstyled">
 		<li data-ng-repeat="toon in toons">
 			<span>{{toon.created | date:'medium'}}</span> /
-			<span>{{toon.user.name}}</span>
 			<h2><a data-ng-href="#!/toons/{{toon._id}}">{{toon.title}}</a></h2>
 			<div>{{toon.content}}</div>
 		</li>
