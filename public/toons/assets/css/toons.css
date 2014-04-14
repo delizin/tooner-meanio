@@ -1,13 +1,16 @@
-.step1-col {
-  height: 450px;
+.trait-col {
+  height: 500px;
   overflow: auto;
+}
+
+.first-row {
+  height: 500px;
 }
 
 .component-list li {
   width: 100%;
   text-align: center;
-  font-size: 23px;
-  cursor: pointer;
+  font-size: 24px;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -29,4 +32,39 @@
 
 .unavailable:hover {
   background-color: #fff;
+}
+
+.stats {
+  width: 300px;
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.stat-name {
+  display: inline-block;
+  width: 100px;
+  text-align: right;
+  padding-right: 5px;
+}
+
+.stat-values {
+  padding-right: 5px;
+  width: 100px;
+  display: inline-block;
+}
+
+.pointer {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+@media only screen and (max-width : 1224px) {
+  .component-list li {
+    font-size: 20px;
+  }
 }

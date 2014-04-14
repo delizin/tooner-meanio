@@ -207,21 +207,28 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     $scope.selectTrait = function(trait) {
       if (!trait.selected && trait.available) {
-        trait.selected = true;
+        if (trait.cost <= $scope.remainingPoints) {
+          trait.selected = true;
+          $scope.remainingPoints -= trait.cost;
 
-        changeBaseStats('strength', trait.grantedBaseStr);
-        changeBaseStats('dexterity', trait.grantedBaseDex);
-        changeBaseStats('constitution', trait.grantedBaseCon);
-        changeBaseStats('intelligence', trait.grantedBaseInt);
-        changeBaseStats('spirit', trait.grantedBaseSpi);
+          changeBaseStats('strength', trait.grantedBaseStr);
+          changeBaseStats('dexterity', trait.grantedBaseDex);
+          changeBaseStats('constitution', trait.grantedBaseCon);
+          changeBaseStats('intelligence', trait.grantedBaseInt);
+          changeBaseStats('spirit', trait.grantedBaseSpi);
 
-        changeMaxStats('strength', trait.grantedMaxStr);
-        changeMaxStats('dexterity', trait.grantedMaxDex);
-        changeMaxStats('constitution', trait.grantedMaxCon);
-        changeMaxStats('intelligence', trait.grantedMaxInt);
-        changeMaxStats('spirit', trait.grantedMaxSpi);
+          changeMaxStats('strength', trait.grantedMaxStr);
+          changeMaxStats('dexterity', trait.grantedMaxDex);
+          changeMaxStats('constitution', trait.grantedMaxCon);
+          changeMaxStats('intelligence', trait.grantedMaxInt);
+          changeMaxStats('spirit', trait.grantedMaxSpi);
+        } else {
+          console.log("Not enough points to apply trait");
+        }
+        
       } else {
         trait.selected = false;
+        $scope.remainingPoints += trait.cost;
 
         changeBaseStats('strength', trait.grantedBaseStr * -1);
         changeBaseStats('dexterity', trait.grantedBaseDex * -1);
@@ -235,7 +242,6 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         changeMaxStats('intelligence', trait.grantedMaxInt * -1);
         changeMaxStats('spirit', trait.grantedMaxSpi * -1);
       }
-      
     };
 
     function getAvailableBaseClasses() {
@@ -266,7 +272,11 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     function unselectAllTraits() {
       $scope.traits.forEach(function(trait) {
-        trait.selected = false;
+        if (trait.selected) {
+          $scope.remainingPoints += trait.cost;
+          trait.selected = false;  
+        }
+        
       });
     }
 
