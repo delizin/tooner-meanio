@@ -1,20 +1,45 @@
 <section data-ng-controller="ToonsController" data-ng-init="findComponents()">
+ 
 	<div class="row">
-    <div class="stats">
-      <ul class="list-inline">
+    <div class="col-md-4 step1-col">
+      <ul id="races" class="list-unstyled component-list">
         <li data-ng-repeat="race in races">
-          <span class="race" ng-class="{activeRace: selectedRace.name === race.name}" ng-click="chooseRace(race)">
+          <div class="component-item" ng-class="{active: selectedRace.name === race.name}" ng-click="chooseRace(race)">
             {{race.name}} ({{race.cost}})
-          </span>
-        </li>
-      </ul>    
-      <ul class="list-inline">
-        <li data-ng-repeat="class in baseClasses">
-          <span class="base-class" ng-class="{activeBaseClass: selectedBaseClass.name === class.name, unavailable: !class.available}" ng-click="chooseBaseClass(class)">
-            {{class.name}}
-          </span>
+          </div>
         </li>
       </ul>
+    </div>
+      
+    <div class="col-md-4 step1-col" ng-show="selectedRace">
+      <ul id="bases" class="list-unstyled component-list">
+        <li data-ng-repeat="class in baseClasses">
+          <div class="component-item" ng-class="{active: selectedBaseClass.name === class.name, unavailable: !class.available}" ng-click="chooseBaseClass(class)">
+            {{class.name}}
+          </div>
+        </li>
+      </ul>
+    </div>
+      
+    <div class="col-md-4 step1-col" ng-show="selectedBaseClass">
+      <ul id="traits" class="list-unstyled component-list">
+        <li data-ng-repeat="trait in traits | orderBy: 'name'">
+          <div class="component-item" ng-class="{unavailable: !trait.available, active: trait.selected}" ng-click="selectTrait(trait)">
+            {{trait.name}}
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="text-center">Points Remaining: {{remainingPoints}} / {{maxPoints}}</h1>
+    </div>
+  </div>  
+
+  <div class="row">
+    <div class="col-md-12">
       <ul class="list-unstyled">
         <li>
           Strength {{stats.baseStrength}} / <strong>{{stats.currentStrength}}</strong> / {{stats.maxStrength}} 
@@ -42,7 +67,8 @@
           <span class="glyphicon glyphicon-minus" ng-click="decreaseStat('spirit')"></span>
         </li>
       </ul>
-      <p>Points Remaining: {{remainingPoints}} / {{maxPoints}}</p>
+
+
       <div>
         Granted Base Str: {{selectedRace.grantedBaseStr}} + {{selectedBaseClass.grantedBaseStr}}<br/>
         Granted Base Dex: {{selectedRace.grantedBaseDex}} + {{selectedBaseClass.grantedBaseStr}}<br/>
@@ -55,16 +81,6 @@
         Granted Max Con: {{selectedRace.grantedMaxCon}}<br/>
         Granted Max Int: {{selectedRace.grantedMaxInt}}<br/>
         Granted Max Spi: {{selectedRace.grantedMaxSpi}}<br/><br/>
-      </div>
-      <div ng-show="selectedBaseClass">
-        <ul class="list-unstyled trait-list">
-          <li data-ng-repeat="trait in traits | orderBy: 'name'">
-            <span class="trait" ng-class="{unavailable: !trait.available}" ng-click="selectTrait(trait)">
-              {{trait.name}}
-            </span>
-            <span ng-show="trait.selected"> Selected</span>
-          </li>
-        </ul>
       </div>
     </div>
   </div>

@@ -139,6 +139,9 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         changeMaxStats('intelligence', $scope.selectedRace.grantedMaxInt * -1);
         changeMaxStats('spirit', $scope.selectedRace.grantedMaxSpi * -1);
       }
+
+      unselectAllTraits();
+
       if (race === $scope.selectedRace) {
         $scope.selectedRace = null;
         //Choose currently selected class will toggle it to unselected
@@ -182,24 +185,28 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         changeBaseStats('intelligence', $scope.selectedBaseClass.grantedBaseInt * -1);
         changeBaseStats('spirit', $scope.selectedBaseClass.grantedBaseSpi * -1);
       }
-      
+
+      unselectAllTraits();
+
       if (baseClass === $scope.selectedBaseClass) {
         $scope.selectedBaseClass = null;
       } else {
-        $scope.selectedBaseClass = baseClass;
+        if (baseClass.available) {
+          $scope.selectedBaseClass = baseClass;
 
-        changeBaseStats('strength', baseClass.grantedBaseStr);
-        changeBaseStats('dexterity', baseClass.grantedBaseDex);
-        changeBaseStats('constitution', baseClass.grantedBaseCon);
-        changeBaseStats('intelligence', baseClass.grantedBaseInt);
-        changeBaseStats('spirit', baseClass.grantedBaseSpi);
+          changeBaseStats('strength', baseClass.grantedBaseStr);
+          changeBaseStats('dexterity', baseClass.grantedBaseDex);
+          changeBaseStats('constitution', baseClass.grantedBaseCon);
+          changeBaseStats('intelligence', baseClass.grantedBaseInt);
+          changeBaseStats('spirit', baseClass.grantedBaseSpi);
 
-        getAvailableTraits();
+          getAvailableTraits();
+        }
       }
     };
 
     $scope.selectTrait = function(trait) {
-      if (!trait.selected) {
+      if (!trait.selected && trait.available) {
         trait.selected = true;
 
         changeBaseStats('strength', trait.grantedBaseStr);
@@ -228,6 +235,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         changeMaxStats('intelligence', trait.grantedMaxInt * -1);
         changeMaxStats('spirit', trait.grantedMaxSpi * -1);
       }
+      
     };
 
     function getAvailableBaseClasses() {
@@ -243,15 +251,22 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     }    
 
     function getAvailableTraits() {
-      var baseClass = $scope.selectedBaseClass.name;
+      var baseClass = $scope.selectedBaseClass;
       //var race = $scope.selectedRace;
 
       $scope.traits.forEach(function(trait) {
-        if (trait.availableBaseClasses.indexOf(baseClass) !== -1) {
+        if (baseClass && trait.availableBaseClasses.indexOf(baseClass.name) !== -1) {
           trait.available = true;
         } else {
           trait.available = false;
+          if (trait.selected) $scope.selectTrait(trait);
         }
+      });
+    }
+
+    function unselectAllTraits() {
+      $scope.traits.forEach(function(trait) {
+        trait.selected = false;
       });
     }
 

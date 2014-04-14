@@ -1,57 +1,32 @@
-.stats {
+.step1-col {
+  height: 450px;
+  overflow: auto;
+}
+
+.component-list li {
+  width: 100%;
   text-align: center;
-}
-
-.glyphicon {
+  font-size: 23px;
   cursor: pointer;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.race {
-  background-color: #ABD3DD;
-  padding: 5px;
-  cursor: pointer;
+.component-list li:first-child {
+  border-top: 1px solid #e0e0e0;
 }
 
-.race:hover {
-  background-color: #39BDFF;
+.component-item:hover {
+  background-color: #e0e0e0;
 }
 
-.activeRace {
-  background-color: #E0882F;
-}
-
-.base-class {
-  background-color: #ABD3DD;
-  padding: 5px;
-  cursor: pointer;
-}
-
-.base-class:hover {
-  background-color: #39BDFF;
-}
-
-.activeBaseClass {
-  background-color: #E0882F;
-}
-
-.trait-list li {
-  margin-bottom: 10px;
-}
-
-.trait {
-  background-color: #ABD3DD;
-  padding: 5px;
-  cursor: pointer;
-}
-
-.trait:hover {
-  background-color: #39BDFF;
-}
-
-.selectedTrait {
-  background-color: #E0882F;
+.active {
+  background-color: #d9edf7;
 }
 
 .unavailable {
-  background-color: #FF3B3B;
+  color: #ddd;
+}
+
+.unavailable:hover {
+  background-color: #fff;
 }
