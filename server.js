@@ -33,7 +33,7 @@ logger.init(app, passport, mongoose);
 
 //Seed hearthstone cards
 mongoose.connection.once('open', function() {
-  console.log("Database open");
+  console.log('Database open');
 
   if (config.seedData) {
     require('./server/config/seed.js');
@@ -43,7 +43,12 @@ mongoose.connection.once('open', function() {
     Trait.remove().exec()
     .then(function() { Trait.seed(require('./server/config/assets/starting-traits.json')); });
 
-    console.log("Finished seeding");
+    var Race = mongoose.model('Race');
+
+    Race.remove().exec()
+    .then(function() { Race.seed(require('./server/config/assets/races.json')); });
+
+    console.log('Finished seeding');
   }
 });
 

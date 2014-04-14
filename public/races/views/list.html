@@ -1,0 +1,7 @@
+<section data-ng-controller="RacesController" data-ng-init="find()">
+	<ul class="races unstyled">
+		<li data-ng-repeat="race in races">
+			<h2><a data-ng-href="#!/races/{{race._id}}">{{race.name}}</a></h2>
+		</li>
+	</ul>
+</section>
