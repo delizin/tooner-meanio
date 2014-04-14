@@ -62,17 +62,11 @@ angular.module('mean.toons').config(['$stateProvider', '$urlRouterProvider',
         $stateProvider
             .state('all toons', {
                 url: '/toons',
-                templateUrl: 'public/toons/views/list.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
+                templateUrl: 'public/toons/views/list.html'
             })
             .state('create toon', {
                 url: '/toons/create',
-                templateUrl: 'public/toons/views/create.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
+                templateUrl: 'public/toons/views/create.html'
             })
             .state('edit toon', {
                 url: '/toons/:toonId/edit',
@@ -83,10 +77,7 @@ angular.module('mean.toons').config(['$stateProvider', '$urlRouterProvider',
             })
             .state('toon by id', {
                 url: '/toons/:toonId',
-                templateUrl: 'public/toons/views/view.html',
-                resolve: {
-                    loggedin: checkLoggedin
-                }
+                templateUrl: 'public/toons/views/view.html'
             })
     }
 ])

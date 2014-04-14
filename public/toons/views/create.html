@@ -1,12 +1,16 @@
 <section data-ng-controller="ToonsController" data-ng-init="findComponents()">
 	<div class="row">
     <div class="stats">
-      <ul class="list-unstyled">
-        <li data-ng-repeat="trait in selectedTraits">{{trait}}</li>
-      </ul>
+      <ul class="list-inline">
+        <li data-ng-repeat="race in races">
+          <span class="race" ng-class="{activeRace: selectedRace.name === race.name}" ng-click="chooseRace(race)">
+            {{race.name}} ({{race.cost}})
+          </span>
+        </li>
+      </ul>    
       <ul class="list-inline">
         <li data-ng-repeat="class in baseClasses">
-          <span class="base-class" ng-class="{activeBaseClass: selectedBaseClass.name === class.name}" ng-click="chooseBaseClass(class)">
+          <span class="base-class" ng-class="{activeBaseClass: selectedBaseClass.name === class.name, unavailable: !class.available}" ng-click="chooseBaseClass(class)">
             {{class.name}}
           </span>
         </li>
@@ -39,6 +43,19 @@
         </li>
       </ul>
       <p>Points Remaining: {{remainingPoints}} / {{maxPoints}}</p>
+      <div>
+        Granted Base Str: {{selectedRace.grantedBaseStr}} + {{selectedBaseClass.grantedBaseStr}}<br/>
+        Granted Base Dex: {{selectedRace.grantedBaseDex}} + {{selectedBaseClass.grantedBaseStr}}<br/>
+        Granted Base Con: {{selectedRace.grantedBaseCon}} + {{selectedBaseClass.grantedBaseStr}}<br/>
+        Granted Base Int: {{selectedRace.grantedBaseInt}} + {{selectedBaseClass.grantedBaseStr}}<br/>
+        Granted Base Spi: {{selectedRace.grantedBaseSpi}} + {{selectedBaseClass.grantedBaseStr}}<br/><br/>
+        
+        Granted Max Str: {{selectedRace.grantedMaxStr}}<br/>
+        Granted Max Dex: {{selectedRace.grantedMaxDex}}<br/>
+        Granted Max Con: {{selectedRace.grantedMaxCon}}<br/>
+        Granted Max Int: {{selectedRace.grantedMaxInt}}<br/>
+        Granted Max Spi: {{selectedRace.grantedMaxSpi}}<br/><br/>
+      </div>
       <div ng-show="selectedBaseClass">
         <ul class="list-unstyled trait-list">
           <li data-ng-repeat="trait in traits | orderBy: 'name'">
@@ -48,7 +65,7 @@
             <span ng-show="trait.selected"> Selected</span>
           </li>
         </ul>
-      </div>      
+      </div>
     </div>
   </div>
 </section>

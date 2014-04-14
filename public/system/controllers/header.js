@@ -7,11 +7,11 @@ angular.module('mean.system').controller('HeaderController', ['$scope', '$rootSc
 
         // Default hard coded menu items for main menu
         var defaultMainMenu = [{
-            'roles': ['authenticated'],
+            'roles': ['annonymous'],
             'title': 'Toons',
             'link': 'all toons'
         }, {
-            'roles': ['authenticated'],
+            'roles': ['annonymous'],
             'title': 'Create New Toon',
             'link': 'create toon'
         }];

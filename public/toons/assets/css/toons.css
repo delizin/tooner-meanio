@@ -6,6 +6,20 @@
   cursor: pointer;
 }
 
+.race {
+  background-color: #ABD3DD;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.race:hover {
+  background-color: #39BDFF;
+}
+
+.activeRace {
+  background-color: #E0882F;
+}
+
 .base-class {
   background-color: #ABD3DD;
   padding: 5px;

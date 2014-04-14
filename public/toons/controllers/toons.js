@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'Traits', 'Toons',
-  function($scope, $stateParams, $location, Global, Traits, Toons) {
+angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'Races', 'Traits', 'Toons',
+  function($scope, $stateParams, $location, Global, Races, Traits, Toons) {
     $scope.global = Global;
     init();
 
@@ -26,6 +26,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
       $scope.remainingPoints = $scope.maxPoints = 55;
       $scope.selectedBaseClass = null;
+      $scope.selectedRace = null;
 
       $scope.baseClasses = [{
         'name': 'Fighter',
@@ -116,6 +117,60 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       Traits.query(function(traits) {
         $scope.traits = traits;
       });
+
+      Races.query(function(races) {
+        $scope.races = races;
+      });
+    };
+
+    $scope.chooseRace = function(race) {
+      if ($scope.selectedRace) {
+        $scope.remainingPoints += $scope.selectedRace.cost;
+        
+        changeBaseStats('strength', $scope.selectedRace.grantedBaseStr * -1);
+        changeBaseStats('dexterity', $scope.selectedRace.grantedBaseDex * -1);
+        changeBaseStats('constitution', $scope.selectedRace.grantedBaseCon * -1);
+        changeBaseStats('intelligence', $scope.selectedRace.grantedBaseInt * -1);
+        changeBaseStats('spirit', $scope.selectedRace.grantedBaseSpi * -1);
+
+        changeMaxStats('strength', $scope.selectedRace.grantedMaxStr * -1);
+        changeMaxStats('dexterity', $scope.selectedRace.grantedMaxDex * -1);
+        changeMaxStats('constitution', $scope.selectedRace.grantedMaxCon * -1);
+        changeMaxStats('intelligence', $scope.selectedRace.grantedMaxInt * -1);
+        changeMaxStats('spirit', $scope.selectedRace.grantedMaxSpi * -1);
+      }
+      if (race === $scope.selectedRace) {
+        $scope.selectedRace = null;
+        //Choose currently selected class will toggle it to unselected
+        $scope.chooseBaseClass($scope.selectedBaseClass);
+      } else {
+        if (race.cost <= $scope.remainingPoints) {
+          $scope.selectedRace = race;
+          $scope.remainingPoints -= race.cost;
+
+          changeBaseStats('strength', race.grantedBaseStr);
+          changeBaseStats('dexterity', race.grantedBaseDex);
+          changeBaseStats('constitution', race.grantedBaseCon);
+          changeBaseStats('intelligence', race.grantedBaseInt);
+          changeBaseStats('spirit', race.grantedBaseSpi);
+
+          changeMaxStats('strength', race.grantedMaxStr);
+          changeMaxStats('dexterity', race.grantedMaxDex);
+          changeMaxStats('constitution', race.grantedMaxCon);
+          changeMaxStats('intelligence', race.grantedMaxInt);
+          changeMaxStats('spirit', race.grantedMaxSpi);
+        } else {
+          console.log("Not enough points to select this race.");
+        }
+        
+      }
+
+      getAvailableBaseClasses();
+
+      //If the selected base class is not available to the newly selected race then unselect the base class
+      if ($scope.selectedBaseClass && !$scope.selectedBaseClass.available) {
+        $scope.chooseBaseClass($scope.selectedBaseClass);
+      }
     };
 
     $scope.chooseBaseClass = function(baseClass) {
@@ -142,6 +197,50 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         getAvailableTraits();
       }
     };
+
+    $scope.selectTrait = function(trait) {
+      if (!trait.selected) {
+        trait.selected = true;
+
+        changeBaseStats('strength', trait.grantedBaseStr);
+        changeBaseStats('dexterity', trait.grantedBaseDex);
+        changeBaseStats('constitution', trait.grantedBaseCon);
+        changeBaseStats('intelligence', trait.grantedBaseInt);
+        changeBaseStats('spirit', trait.grantedBaseSpi);
+
+        changeMaxStats('strength', trait.grantedMaxStr);
+        changeMaxStats('dexterity', trait.grantedMaxDex);
+        changeMaxStats('constitution', trait.grantedMaxCon);
+        changeMaxStats('intelligence', trait.grantedMaxInt);
+        changeMaxStats('spirit', trait.grantedMaxSpi);
+      } else {
+        trait.selected = false;
+
+        changeBaseStats('strength', trait.grantedBaseStr * -1);
+        changeBaseStats('dexterity', trait.grantedBaseDex * -1);
+        changeBaseStats('constitution', trait.grantedBaseCon * -1);
+        changeBaseStats('intelligence', trait.grantedBaseInt * -1);
+        changeBaseStats('spirit', trait.grantedBaseSpi * -1);
+
+        changeMaxStats('strength', trait.grantedMaxStr * -1);
+        changeMaxStats('dexterity', trait.grantedMaxDex * -1);
+        changeMaxStats('constitution', trait.grantedMaxCon * -1);
+        changeMaxStats('intelligence', trait.grantedMaxInt * -1);
+        changeMaxStats('spirit', trait.grantedMaxSpi * -1);
+      }
+    };
+
+    function getAvailableBaseClasses() {
+      var race = $scope.selectedRace;
+
+      $scope.baseClasses.forEach(function(baseClass) {
+        if (race && race.availableBaseClasses.indexOf(baseClass.name) !== -1) {
+          baseClass.available = true;
+        } else {
+          baseClass.available = false;
+        }
+      });
+    }    
 
     function getAvailableTraits() {
       var baseClass = $scope.selectedBaseClass.name;
@@ -301,38 +400,6 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           default:
             console.log('Error: tried to decrease non-existent stat');
         }
-      }
-    };
-
-    $scope.selectTrait = function(trait) {
-      if (!trait.selected) {
-        trait.selected = true;
-
-        changeBaseStats('strength', trait.grantedBaseStr);
-        changeBaseStats('dexterity', trait.grantedBaseDex);
-        changeBaseStats('constitution', trait.grantedBaseCon);
-        changeBaseStats('intelligence', trait.grantedBaseInt);
-        changeBaseStats('spirit', trait.grantedBaseSpi);
-
-        changeMaxStats('strength', trait.grantedMaxStr);
-        changeMaxStats('dexterity', trait.grantedMaxDex);
-        changeMaxStats('constitution', trait.grantedMaxCon);
-        changeMaxStats('intelligence', trait.grantedMaxInt);
-        changeMaxStats('spirit', trait.grantedMaxSpi);
-      } else {
-        trait.selected = false;
-
-        changeBaseStats('strength', trait.grantedBaseStr * -1);
-        changeBaseStats('dexterity', trait.grantedBaseDex * -1);
-        changeBaseStats('constitution', trait.grantedBaseCon * -1);
-        changeBaseStats('intelligence', trait.grantedBaseInt * -1);
-        changeBaseStats('spirit', trait.grantedBaseSpi * -1);
-
-        changeMaxStats('strength', trait.grantedMaxStr * -1);
-        changeMaxStats('dexterity', trait.grantedMaxDex * -1);
-        changeMaxStats('constitution', trait.grantedMaxCon * -1);
-        changeMaxStats('intelligence', trait.grantedMaxInt * -1);
-        changeMaxStats('spirit', trait.grantedMaxSpi * -1);
       }
     };
   }
