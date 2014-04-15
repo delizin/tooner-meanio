@@ -17,7 +17,7 @@ for (var index in window.modules) {
 };
 
 // Default modules
-var modules = ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.races', 'mean.traits', 'mean.toons', 'mean.auth'];
+var modules = ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.router', 'angular-growl', 'mean.system', 'mean.races', 'mean.traits', 'mean.toons', 'mean.auth', 'ngAnimate'];
 modules = modules.concat(packageModules);
 
 // Combined modules

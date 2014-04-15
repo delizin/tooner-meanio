@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'Races', 'Traits', 'Toons',
-  function($scope, $stateParams, $location, Global, Races, Traits, Toons) {
+angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'growl', 'Races', 'Traits', 'Toons',
+  function($scope, $stateParams, $location, Global, growl, Races, Traits, Toons) {
     $scope.global = Global;
     init();
 
@@ -163,7 +163,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           changeMaxStats('intelligence', race.grantedMaxInt);
           changeMaxStats('spirit', race.grantedMaxSpi);
         } else {
-          console.log("Not enough points to select this race.");
+          growl.addWarnMessage("Not enough points to select this race.", {ttl: 3000});
         }
         
       }
@@ -207,7 +207,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     $scope.selectTrait = function(trait) {
       if (!trait.available) {
-        console.log("Trait not available");
+        growl.addWarnMessage("Trait not available.", {ttl: 5000});
         return false;
       } else if (trait.requirement) {
         console.log(trait.requirementMessage + " for this trait");
