@@ -206,41 +206,66 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     };
 
     $scope.selectTrait = function(trait) {
-      if (!trait.selected && trait.available) {
-        if (trait.cost <= $scope.remainingPoints) {
-          trait.selected = true;
-          $scope.remainingPoints -= trait.cost;
-
-          changeBaseStats('strength', trait.grantedBaseStr);
-          changeBaseStats('dexterity', trait.grantedBaseDex);
-          changeBaseStats('constitution', trait.grantedBaseCon);
-          changeBaseStats('intelligence', trait.grantedBaseInt);
-          changeBaseStats('spirit', trait.grantedBaseSpi);
-
-          changeMaxStats('strength', trait.grantedMaxStr);
-          changeMaxStats('dexterity', trait.grantedMaxDex);
-          changeMaxStats('constitution', trait.grantedMaxCon);
-          changeMaxStats('intelligence', trait.grantedMaxInt);
-          changeMaxStats('spirit', trait.grantedMaxSpi);
-        } else {
-          console.log("Not enough points to apply trait");
-        }
-        
+      if (!trait.available) {
+        console.log("Trait not available");
+        return false;
+      } else if (trait.requirement) {
+        console.log(trait.requirementMessage + " for this trait");
+        return false;
       } else {
-        trait.selected = false;
-        $scope.remainingPoints += trait.cost;
+        if (!trait.selected) {
+          if (trait.cost <= $scope.remainingPoints) {
+            trait.selected = true;
+            $scope.remainingPoints -= trait.cost;
 
-        changeBaseStats('strength', trait.grantedBaseStr * -1);
-        changeBaseStats('dexterity', trait.grantedBaseDex * -1);
-        changeBaseStats('constitution', trait.grantedBaseCon * -1);
-        changeBaseStats('intelligence', trait.grantedBaseInt * -1);
-        changeBaseStats('spirit', trait.grantedBaseSpi * -1);
+            changeBaseStats('strength', trait.grantedBaseStr);
+            changeBaseStats('dexterity', trait.grantedBaseDex);
+            changeBaseStats('constitution', trait.grantedBaseCon);
+            changeBaseStats('intelligence', trait.grantedBaseInt);
+            changeBaseStats('spirit', trait.grantedBaseSpi);
 
-        changeMaxStats('strength', trait.grantedMaxStr * -1);
-        changeMaxStats('dexterity', trait.grantedMaxDex * -1);
-        changeMaxStats('constitution', trait.grantedMaxCon * -1);
-        changeMaxStats('intelligence', trait.grantedMaxInt * -1);
-        changeMaxStats('spirit', trait.grantedMaxSpi * -1);
+            changeMaxStats('strength', trait.grantedMaxStr);
+            changeMaxStats('dexterity', trait.grantedMaxDex);
+            changeMaxStats('constitution', trait.grantedMaxCon);
+            changeMaxStats('intelligence', trait.grantedMaxInt);
+            changeMaxStats('spirit', trait.grantedMaxSpi);  
+          } else {
+            console.log("Not enough points to apply trait");
+          }
+        } else {
+          trait.selected = false;
+          $scope.remainingPoints += trait.cost;
+
+          changeBaseStats('strength', trait.grantedBaseStr * -1);
+          changeBaseStats('dexterity', trait.grantedBaseDex * -1);
+          changeBaseStats('constitution', trait.grantedBaseCon * -1);
+          changeBaseStats('intelligence', trait.grantedBaseInt * -1);
+          changeBaseStats('spirit', trait.grantedBaseSpi * -1);
+
+          changeMaxStats('strength', trait.grantedMaxStr * -1);
+          changeMaxStats('dexterity', trait.grantedMaxDex * -1);
+          changeMaxStats('constitution', trait.grantedMaxCon * -1);
+          changeMaxStats('intelligence', trait.grantedMaxInt * -1);
+          changeMaxStats('spirit', trait.grantedMaxSpi * -1);
+        }
+
+        getAvailableTraits();
+      }
+    };
+
+    function checkStatRequirements(obj) {
+      if ($scope.stats.currentStrength < obj.requiredStr) {
+        return {status: true, response: "Not enough Strength"};
+      } else if ($scope.stats.currentDexterity < obj.requiredDex) {
+        return {status: true, response: "Not enough Dexterity"};
+      } else if ($scope.stats.currentConstitution < obj.requiredCon) {
+        return {status: true, response: "Not enough Constitution"};
+      } else if ($scope.stats.currentIntelligence < obj.requiredInt) {
+        return {status: true, response: "Not enough Intelligence"};
+      } else if ($scope.stats.currentSpirit < obj.requiredSpi) {
+        return {status: true, response: "Not enough Spirit"};
+      } else {
+        return {status: false};
       }
     };
 
@@ -263,6 +288,16 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.traits.forEach(function(trait) {
         if (baseClass && trait.availableBaseClasses.indexOf(baseClass.name) !== -1) {
           trait.available = true;
+
+          var requirement = checkStatRequirements(trait);
+          if (!requirement.status) {
+            trait.requirement = false;
+          } else {
+            trait.requirement = true;
+            trait.requirementMessage = requirement.response;
+            if (trait.selected) $scope.selectTrait(trait);
+          }
+          
         } else {
           trait.available = false;
           if (trait.selected) $scope.selectTrait(trait);
@@ -276,7 +311,6 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           $scope.remainingPoints += trait.cost;
           trait.selected = false;  
         }
-        
       });
     }
 
@@ -386,6 +420,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           default:
             console.log('Error: tried to increase non-existent stat');
         }
+        getAvailableTraits();
       }
     };
 
@@ -425,6 +460,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           default:
             console.log('Error: tried to decrease non-existent stat');
         }
+        getAvailableTraits();
       }
     };
   }

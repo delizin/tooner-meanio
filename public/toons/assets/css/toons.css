@@ -11,11 +11,11 @@
   width: 100%;
   text-align: center;
   font-size: 24px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #CFCFCF;
 }
 
 .component-list li:first-child {
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #CFCFCF;
 }
 
 .component-item:hover {
@@ -30,12 +30,16 @@
   color: #ddd;
 }
 
+.requirement, .requirement:hover {
+  background-color: #f2dede;
+}
+
 .unavailable:hover {
   background-color: #fff;
 }
 
 .stats {
-  width: 300px;
+  width: 273px;
   padding: 10px;
   font-size: 18px;
   text-align: center;
@@ -54,13 +58,20 @@
   display: inline-block;
 }
 
-.pointer {
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-  user-select: none;
+.traits {
+  padding: 10px;
+}
+
+.selected-traits-header {
+  display: block;
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.selected-traits li {
+  text-align: center;
+  font-size: 16px;
 }
 
 @media only screen and (max-width : 1224px) {
