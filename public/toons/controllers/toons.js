@@ -124,6 +124,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     };
 
     $scope.chooseRace = function(race) {
+      //First remove the currently selected race's stats
       if ($scope.selectedRace) {
         $scope.remainingPoints += $scope.selectedRace.cost;
         
@@ -140,12 +141,14 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         changeMaxStats('spirit', $scope.selectedRace.grantedMaxSpi * -1);
       }
 
+      //Then unselect all traits before switching
       unselectAllTraits();
 
+      //If race is already select then unselect it
       if (race === $scope.selectedRace) {
         $scope.selectedRace = null;
-        //Choose currently selected class will toggle it to unselected
         $scope.chooseBaseClass($scope.selectedBaseClass);
+      //Else select the race and apply stat changes
       } else {
         if (race.cost <= $scope.remainingPoints) {
           $scope.selectedRace = race;
@@ -168,12 +171,14 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         
       }
 
+      //Race is selected, get available base classes and verify currently selected base class
       getAvailableBaseClasses();
-
       //If the selected base class is not available to the newly selected race then unselect the base class
       if ($scope.selectedBaseClass && !$scope.selectedBaseClass.available) {
         $scope.chooseBaseClass($scope.selectedBaseClass);
       }
+      //Refresh available traits after new race is selected
+      getAvailableTraits();
     };
 
     $scope.chooseBaseClass = function(baseClass) {
@@ -210,7 +215,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         growl.addWarnMessage("Trait not available.", {ttl: 5000});
         return false;
       } else if (trait.requirement) {
-        console.log(trait.requirementMessage + " for this trait");
+        growl.addWarnMessage(trait.requirementMessage + " for this trait.", {ttl: 5000});
         return false;
       } else {
         if (!trait.selected) {
@@ -230,12 +235,36 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
             changeMaxStats('intelligence', trait.grantedMaxInt);
             changeMaxStats('spirit', trait.grantedMaxSpi);  
           } else {
-            console.log("Not enough points to apply trait");
+            growl.addWarnMessage("Not enough points to apply trait", {ttl: 5000});
           }
         } else {
-          trait.selected = false;
-          $scope.remainingPoints += trait.cost;
+          deselectTrait(trait)
+        }
 
+        getAvailableTraits();
+      }
+    };
+
+    function deselectTrait(trait) {
+      trait.selected = false;
+      $scope.remainingPoints += trait.cost;
+
+      changeBaseStats('strength', trait.grantedBaseStr * -1);
+      changeBaseStats('dexterity', trait.grantedBaseDex * -1);
+      changeBaseStats('constitution', trait.grantedBaseCon * -1);
+      changeBaseStats('intelligence', trait.grantedBaseInt * -1);
+      changeBaseStats('spirit', trait.grantedBaseSpi * -1);
+
+      changeMaxStats('strength', trait.grantedMaxStr * -1);
+      changeMaxStats('dexterity', trait.grantedMaxDex * -1);
+      changeMaxStats('constitution', trait.grantedMaxCon * -1);
+      changeMaxStats('intelligence', trait.grantedMaxInt * -1);
+      changeMaxStats('spirit', trait.grantedMaxSpi * -1);
+    };
+
+    function unselectAllTraits() {
+      $scope.traits.forEach(function(trait) {
+        if (trait.selected) {
           changeBaseStats('strength', trait.grantedBaseStr * -1);
           changeBaseStats('dexterity', trait.grantedBaseDex * -1);
           changeBaseStats('constitution', trait.grantedBaseCon * -1);
@@ -247,13 +276,15 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           changeMaxStats('constitution', trait.grantedMaxCon * -1);
           changeMaxStats('intelligence', trait.grantedMaxInt * -1);
           changeMaxStats('spirit', trait.grantedMaxSpi * -1);
-        }
+          $scope.remainingPoints += trait.cost;
+          trait.selected = false;
 
-        getAvailableTraits();
-      }
-    };
+        }
+      });
+    }    
 
     function checkStatRequirements(obj) {
+      //First check if anything have requirements beyond current stats
       if ($scope.stats.currentStrength < obj.requiredStr) {
         return {status: true, response: "Not enough Strength"};
       } else if ($scope.stats.currentDexterity < obj.requiredDex) {
@@ -264,6 +295,11 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         return {status: true, response: "Not enough Intelligence"};
       } else if ($scope.stats.currentSpirit < obj.requiredSpi) {
         return {status: true, response: "Not enough Spirit"};
+      //Then check if we need to remove currently applied traits
+      } else if (obj.selected && ($scope.stats.currentStrength - obj.grantedBaseStr) < obj.requiredStr) {
+        return {status: true, response: obj.name + " no longer meets requirements and was removed."};
+      } else if (obj.selected && ($scope.stats.currentDexterity - obj.grantedBaseDex) < obj.requiredDex) {
+        return {status: true, response: obj.name + " no longer meets requirements and was removed."};        
       } else {
         return {status: false};
       }
@@ -279,7 +315,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           baseClass.available = false;
         }
       });
-    }    
+    };
 
     function getAvailableTraits() {
       var baseClass = $scope.selectedBaseClass;
@@ -295,21 +331,11 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           } else {
             trait.requirement = true;
             trait.requirementMessage = requirement.response;
-            if (trait.selected) $scope.selectTrait(trait);
+            if (trait.selected) deselectTrait(trait);
           }
-          
         } else {
           trait.available = false;
-          if (trait.selected) $scope.selectTrait(trait);
-        }
-      });
-    }
-
-    function unselectAllTraits() {
-      $scope.traits.forEach(function(trait) {
-        if (trait.selected) {
-          $scope.remainingPoints += trait.cost;
-          trait.selected = false;  
+          if (trait.selected) deselectTrait(trait);
         }
       });
     }

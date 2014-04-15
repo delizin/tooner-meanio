@@ -28,6 +28,7 @@
 
 .unavailable {
   color: #ddd;
+  background-color: #fff !important;
 }
 
 .requirement, .requirement:hover {
