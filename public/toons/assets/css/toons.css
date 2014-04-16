@@ -40,10 +40,9 @@
 }
 
 .stats {
-  width: 273px;
-  padding: 10px;
   font-size: 18px;
   text-align: center;
+  margin-left: 33%;
 }
 
 .stat-name {
@@ -60,7 +59,7 @@
 }
 
 .traits {
-  padding: 10px;
+  margin-right: 33%;
 }
 
 .selected-traits-header {
@@ -82,5 +81,19 @@
 @media only screen and (max-width : 1224px) {
   .component-list li {
     font-size: 20px;
+  }
+
+  .first-row {
+    height: auto;
+  }
+}
+
+@media only screen and (max-width : 991px) {
+  .traits {
+    margin-right: auto;
+  }
+
+  .stats {
+    margin-left: auto;
   }
 }
