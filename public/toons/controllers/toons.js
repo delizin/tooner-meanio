@@ -166,7 +166,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           changeMaxStats('intelligence', race.grantedMaxInt);
           changeMaxStats('spirit', race.grantedMaxSpi);
         } else {
-          growl.addWarnMessage("Not enough points to select this race.", {ttl: 3000});
+          growl.addWarnMessage("Not enough points to select this race", {ttl: 5000});
         }
         
       }
@@ -215,7 +215,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         growl.addWarnMessage("Trait not available.", {ttl: 5000});
         return false;
       } else if (trait.requirement) {
-        growl.addWarnMessage(trait.requirementMessage + " for this trait.", {ttl: 5000});
+        growl.addWarnMessage(trait.requirementMessage + " for this trait", {ttl: 5000});
         return false;
       } else {
         if (!trait.selected) {
@@ -297,9 +297,13 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         return {status: true, response: "Not enough Spirit"};
       //Then check if we need to remove currently applied traits
       } else if (obj.selected && ($scope.stats.currentStrength - obj.grantedBaseStr) < obj.requiredStr) {
-        return {status: true, response: obj.name + " no longer meets requirements and was removed."};
+        return {status: true, response: obj.name + " no longer meets Strength requirements and was removed."};
       } else if (obj.selected && ($scope.stats.currentDexterity - obj.grantedBaseDex) < obj.requiredDex) {
-        return {status: true, response: obj.name + " no longer meets requirements and was removed."};        
+        return {status: true, response: obj.name + " no longer meets Dexterity requirements and was removed."};
+      } else if (obj.selected && ($scope.stats.currentConstitution - obj.grantedBaseCon) < obj.requiredCon) {
+        return {status: true, response: obj.name + " no longer meets Constitution requirements and was removed."};
+      } else if (obj.selected && ($scope.stats.currentConstitution - obj.grantedBaseCon) < obj.requiredCon) {
+        return {status: true, response: obj.name + " no longer meets Constitution requirements and was removed."};        
       } else {
         return {status: false};
       }
@@ -331,7 +335,10 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           } else {
             trait.requirement = true;
             trait.requirementMessage = requirement.response;
-            if (trait.selected) deselectTrait(trait);
+            if (trait.selected) {
+              growl.addWarnMessage(trait.requirementMessage, {ttl: 5000});
+              deselectTrait(trait);
+            }
           }
         } else {
           trait.available = false;
@@ -494,6 +501,9 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       var tooltip = '<ul class="list-unstyled trait-tooltip">'
 
       tooltip += "<li>Creation Cost: " + trait.cost + "</li>";
+
+      if (trait.requiredRaces.length > 0) tooltip += "<li>Required: " + trait.requiredRaces.join(", "); + "</li>";
+      if (trait.prohibitedRaces.length > 0) tooltip += "<li>Prohibited: " + trait.prohibitedRaces.join(", "); + "</li>";
 
       if (trait.requiredStr > 0) tooltip += "<li>Required Str: " + trait.requiredStr + "</li>";
       if (trait.requiredDex > 0) tooltip += "<li>Required Dex: " + trait.requiredDex + "</li>";

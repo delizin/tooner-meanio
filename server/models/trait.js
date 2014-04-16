@@ -88,6 +88,14 @@ var TraitSchema = new Schema({
   availableBaseClasses: {
     type: Array,
     default: []
+  },
+  requiredRaces: {
+    type: Array,
+    default: []
+  },
+  prohibitedRaces: {
+    type: Array,
+    default: []
   }
 });
 

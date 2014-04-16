@@ -33,9 +33,7 @@
                 "value": 5
             }]
         }],
-        "prohibitedRaces": {
-            "vampire": true
-        }
+        "prohibitedRaces": ["Vampire"]
     }, {
         "name": "Blood of the Desert",
         "cost": 4,
@@ -46,10 +44,7 @@
                 "value": 5
             }]
         }],
-        "prohibitedRaces": {
-            "vampire": true
-        }
-        
+        "prohibitedRaces": ["Vampire"]
     }, {
         "name": "Blood of the Dragon",
         "cost": 8,
@@ -60,9 +55,7 @@
                 "value": 10
             }]
         }],
-        "requiredRaces": {
-            "irekei": true
-        }
+        "requiredRaces": ["Irekei"]
     }, {
         "name": "Blood of the North",
         "cost": 4,
@@ -78,10 +71,7 @@
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
         "category": "childhood",
-        "prohibitedRaces": {
-            "dwarf": true,
-            "irekei": true
-        },
+        "prohibitedRaces": ["Dwarf", "Irekei"],
         "granted": [{
             "skillPoints": [{
                 "name": "Staff",
@@ -97,13 +87,11 @@
         "grantedMaxSpi": 10,
         "granted": [{
             "effects": [{
-                "name": "manaRecoveryRate",
+                "name": "Mana Recovery Rate",
                 "value": 10
             }]
         }],
-        "requiredRaces": {
-            "human": true
-        }
+        "requiredRaces": ["Human"]
     }, {
         "name": "Born of the Gwendannen",
         "cost": 10,
@@ -113,13 +101,11 @@
         "grantedMaxCon": 10,
         "granted": [{
             "effects": [{
-                "name": "stamRecoveryRate",
+                "name": "Stamina Recovery Rate",
                 "value": 10
             }]
         }],
-        "requiredRaces": {
-            "human": true
-        }
+        "requiredRaces": ["Human"]
     }, {
         "name": "Born of the Invorri",
         "cost": 10,
@@ -129,13 +115,11 @@
         "grantedMaxStr": 10,
         "granted": [{
             "effects": [{
-                "name": "healthRecoveryRate",
+                "name": "Health Recovery Rate",
                 "value": 10
             }]
         }],
-        "requiredRaces": {
-            "human": true
-        }
+        "requiredRaces": ["Human"]
     }, {
         "name": "Born of the Irydnu",
         "cost": 10,
@@ -145,13 +129,11 @@
         "grantedMaxInt": 10,
         "granted": [{
             "effects": [{
-                "name": "manaRecoveryRate",
+                "name": "Mana Recovery Rate",
                 "value": 10
             }]
         }],
-        "requiredRaces": {
-            "human": true
-        }
+        "requiredRaces": ["Human"]
     }, {
         "name": "Born of the Taripontor",
         "cost": 10,
@@ -161,13 +143,11 @@
         "grantedMaxDex": 10,
         "granted": [{
             "effects": [{
-                "name": "stamRecoveryRate",
+                "name": "Stamina Recovery Rate",
                 "value": 10
             }]
         }],
-        "requiredRaces": {
-            "human": true
-        }
+        "requiredRaces": ["Human"]
     }, {
         "name": "Bowyer Born",
         "cost": 4,
@@ -202,7 +182,7 @@
         "grantedBaseInt": 10,
         "grantedMaxInt": 10
     }, {
-        "name": "Brusier",
+        "name": "Bruiser",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
         "category": "background",
@@ -282,7 +262,7 @@
         "requiredDex": 50,
         "granted": [{
             "effects": [{
-                "name": "movementRate",
+                "name": "Movement Rate",
                 "value": 5
             }]
         }]
@@ -297,11 +277,7 @@
         "grantedMaxCon": 10,
         "grantedBaseInt": -5,
         "grantedMaxInt": -10,
-        "requiredRaces": {
-            "aelfborn": true,
-            "human": true,
-            "shade": true
-        }
+        "requiredRaces": ["Aelfborn", "Human", "Shade"]
     }, {
         "name": "Healthy as an Ox",
         "cost": 12,
@@ -386,11 +362,7 @@
         "name": "Juggernaut",
         "cost": 8,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "requiredRaces": {
-            "dwarf": true,
-            "halfGiant": true,
-            "minotaur": true
-        },
+        "requiredRaces": ["Dwarf", "Half Giant", "Minotaur"],
         "granted": [{
             "resists": [{
                 "name": "crush",
@@ -403,7 +375,7 @@
                 "value": 5
             }],
             "effects": [{
-                "name": "movementRate",
+                "name": "Movement Rate",
                 "value": -10
             }]
         }]
@@ -443,7 +415,7 @@
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
         "granted": [{
             "effects": [{
-                "name": "defenseBonus",
+                "name": "Defense Bonus",
                 "value": 5
             }]
         }]
@@ -454,7 +426,7 @@
         "category": "background",
         "granted": [{
             "skillPoints": [{
-                "name": "Pole Arm",
+                "name": "Polearm",
                 "value": 5
             }]
         }]
@@ -483,7 +455,7 @@
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
         "granted": [{
             "effects": [{
-                "name": "attackBonus",
+                "name": "Attack Bonus",
                 "value": 5
             }]
         }]
@@ -576,12 +548,7 @@
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
         "category": "childhood",
-        "prohibitedRaces": {
-            "dwarf": true,
-            "elf": true,
-            "irekei": true,
-            "minotaur": true
-        },
+        "prohibitedRaces": ["Dwarf", "Elf", "Irekei", "Minotaur"],
         "granted": [{
             "skillPoints": [{
                 "name": "Axe",
@@ -593,12 +560,7 @@
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
         "category": "childhood",
-        "prohibitedRaces": {
-            "aracoix": true,
-            "centaur": true,
-            "elf": true,
-            "minotaur": true
-        },
+        "prohibitedRaces": ["Aracoix", "Centaur", "Elf", "Minotaur"],
         "granted": [{
             "skillPoints": [{
                 "name": "Spear",
@@ -610,10 +572,7 @@
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
         "category": "childhood",
-        "prohibitedRaces": {
-            "dwarf": true,
-            "elf": true
-        },
+        "prohibitedRaces": ["Dwarf", "Elf"],
         "granted": [{
             "skillPoints": [{
                 "name": "Hammer",
@@ -625,12 +584,7 @@
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
         "category": "childhood",
-        "prohibitedRaces": {
-            "dwarf": true,
-            "elf": true,
-            "irekei": true,
-            "centaur": true
-        },
+        "prohibitedRaces": ["Dwarf", "Elf", "Irekei", "Centaur"],
         "granted": [{
             "skillPoints": [{
                 "name": "Sword",
@@ -642,9 +596,7 @@
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
         "category": "childhood",
-        "prohibitedRaces": {
-            "dwarf": true
-        },
+        "prohibitedRaces": ["Dwarf"],
         "granted": [{
             "skillPoints": [{
                 "name": "Dagger",
@@ -656,10 +608,7 @@
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Rogue"],
         "category": "childhood",
-        "prohibitedRaces": {
-            "dwarf": true,
-            "irekei": true
-        },
+        "prohibitedRaces": ["Dwarf", "Irekei"],
         "granted": [{
             "skillPoints": [{
                 "name": "Bow",
@@ -675,13 +624,11 @@
         "grantedMaxInt": 10,
         "granted": [{
             "effects": [{
-                "name": "manaRecoveryRate",
+                "name": "Mana Recovery Rate",
                 "value": 10
             }]
         }],
-        "requiredRaces": {
-            "elf": true
-        }
+        "requiredRaces": ["Elf"]
     }, {
         "name": "Scion of the Gwaridorn",
         "cost": 10,
@@ -691,13 +638,11 @@
         "grantedMaxCon": 10,
         "granted": [{
             "effects": [{
-                "name": "healthRecoveryRate",
+                "name": "Health Recovery Rate",
                 "value": 10
             }]
         }],
-        "requiredRaces": {
-            "elf": true
-        }
+        "requiredRaces": ["Elf"]
     }, {
         "name": "Scion of the Twathedilion",
         "cost": 10,
@@ -707,13 +652,11 @@
         "grantedMaxDex": 10,
         "granted": [{
             "effects": [{
-                "name": "stamRecoveryRate",
+                "name": "Stamina Recovery Rate",
                 "value": 10
             }]
         }],
-        "requiredRaces": {
-            "elf": true
-        }
+        "requiredRaces": ["Elf"]
     }, {
         "name": "Sellsword",
         "cost": 4,
@@ -796,18 +739,16 @@
         "name": "Taint of Chaos",
         "cost": 10,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "requiredRaces": {
-            "nephilim": true
-        },
+        "requiredRaces": ["Nephilim"],
         "granted": [{
             "effects": [{
-                "name": "healthRecoveryRate",
+                "name": "Health Recovery Rate",
                 "value": 20
             }, {
-                "name": "manaRecoveryRate",
+                "name": "Mana Recovery Rate",
                 "value": 20
             }, {
-                "name": "stamRecoveryRate",
+                "name": "Stamina Recovery Rate",
                 "value": 20
             }]
         }]
@@ -821,7 +762,7 @@
                 "name": "mana",
                 "value": 100
             }, {
-                "name": "manaRecoveryRate",
+                "name": "Mana Recovery Rate",
                 "value": 20
             }]
         }]
@@ -855,10 +796,10 @@
         "requiredCon": 50,
         "granted": [{
             "effects": [{
-                "name": "stamRecoveryRate",
+                "name": "Stamina Recovery Rate",
                 "value": 20
             }, {
-                "name": "stam",
+                "name": "Max Stamina",
                 "value": 30
             }]
         }]
@@ -869,10 +810,10 @@
         "requiredCon": 50,
         "granted": [{
             "effects": [{
-                "name": "healthRecoveryRate",
+                "name": "Health Recovery Rate",
                 "value": 20
             }, {
-                "name": "health",
+                "name": "Max Health",
                 "value": 100
             }]
         }]
@@ -880,9 +821,7 @@
         "name": "Tough Hide",
         "cost": 12,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "prohibitedRaces": {
-            "dwarf": true
-        },
+        "prohibitedRaces": ["Dwarf"],
         "granted": [{
             "resists": [{
                 "name": "crush",
@@ -952,9 +891,7 @@
         "name": "Witch Sight",
         "cost": 6,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "prohibitedRaces": {
-            "shade": true
-        },
+        "prohibitedRaces": ["Shade"],
         "granted": [{
             "powers": [{
                 "name": "seeInvis",
