@@ -22,7 +22,7 @@
       
     <div class="col-md-4 step1-col trait-col" ng-show="selectedBaseClass">
       <ul id="traits" class="list-unstyled component-list">
-        <li data-ng-repeat="trait in traits | orderBy: 'name'">
+        <li data-ng-repeat="trait in traits | orderBy: 'name'" tooltip-placement="left" tooltip-append-to-body="true" tooltip-html-unsafe="{{getTraitTooltip(trait)}}">
           <div class="component-item pointer" ng-class="{unavailable: !trait.available, active: trait.selected, requirement: trait.requirement}" ng-click="selectTrait(trait)">
             {{trait.name}} ({{trait.cost}})
           </div>
@@ -40,39 +40,39 @@
   <div class="row">
     <div class="col-md-3 col-md-offset-3">
       <div class="panel panel-default center-block stats">
-      <ul class="list-unstyled">
-        <li>
-          <span class="stat-name">Strength</span>
-          <span class="stat-values">{{stats.baseStrength}}/<strong>{{stats.currentStrength}}</strong>/{{stats.maxStrength}}</span>
-          <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('strength')"></span> 
-          <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('strength')"></span>
-        </li>
-        <li>
-          <span class="stat-name">Dexterity</span>
-          <span class="stat-values">{{stats.baseDexterity}}/<strong>{{stats.currentDexterity}}</strong>/{{stats.maxDexterity}}</span>
-          <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('dexterity')"></span> 
-          <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('dexterity')"></span>
-        </li>
-        <li>
-          <span class="stat-name">Constitution</span>
-          <span class="stat-values">{{stats.baseConstitution}}/<strong>{{stats.currentConstitution}}</strong>/{{stats.maxConstitution}}</span>
-          <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('constitution')"></span> 
-          <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('constitution')"></span>
-        </li>
-        <li>
-          <span class="stat-name">Intelligence</span>
-          <span class="stat-values">{{stats.baseIntelligence}}/<strong>{{stats.currentIntelligence}}</strong>/{{stats.maxIntelligence}}</span>
-          <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('intelligence')"></span> 
-          <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('intelligence')"></span>
-        </li>
-        <li>
-          <span class="stat-name">Spirit</span>
-          <span class="stat-values">{{stats.baseSpirit}}/<strong>{{stats.currentSpirit}}</strong>/{{stats.maxSpirit}}</span>
-          <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('spirit')"></span> 
-          <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('spirit')"></span>
-        </li>
-      </ul>        
-    </div>
+        <ul class="list-unstyled">
+          <li>
+            <span class="stat-name">Strength</span>
+            <span class="stat-values">{{stats.baseStrength}}/<strong>{{stats.currentStrength}}</strong>/{{stats.maxStrength}}</span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('strength')"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('strength')"></span>
+          </li>
+          <li>
+            <span class="stat-name">Dexterity</span>
+            <span class="stat-values">{{stats.baseDexterity}}/<strong>{{stats.currentDexterity}}</strong>/{{stats.maxDexterity}}</span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('dexterity')"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('dexterity')"></span>
+          </li>
+          <li>
+            <span class="stat-name">Constitution</span>
+            <span class="stat-values">{{stats.baseConstitution}}/<strong>{{stats.currentConstitution}}</strong>/{{stats.maxConstitution}}</span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('constitution')"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('constitution')"></span>
+          </li>
+          <li>
+            <span class="stat-name">Intelligence</span>
+            <span class="stat-values">{{stats.baseIntelligence}}/<strong>{{stats.currentIntelligence}}</strong>/{{stats.maxIntelligence}}</span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('intelligence')"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('intelligence')"></span>
+          </li>
+          <li>
+            <span class="stat-name">Spirit</span>
+            <span class="stat-values">{{stats.baseSpirit}}/<strong>{{stats.currentSpirit}}</strong>/{{stats.maxSpirit}}</span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('spirit')"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('spirit')"></span>
+          </li>
+        </ul>        
+      </div>
     </div>
     <div class="col-md-3">
       <div class="panel panel-default traits">

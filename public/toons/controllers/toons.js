@@ -489,5 +489,36 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         getAvailableTraits();
       }
     };
+
+    $scope.getTraitTooltip = function(trait) {
+      var tooltip = '<ul class="list-unstyled trait-tooltip">'
+
+      tooltip += "<li>Creation Cost: " + trait.cost + "</li>";
+
+      if (trait.requiredStr > 0) tooltip += "<li>Required Str: " + trait.requiredStr + "</li>";
+      if (trait.requiredDex > 0) tooltip += "<li>Required Dex: " + trait.requiredDex + "</li>";
+      if (trait.requiredCon > 0) tooltip += "<li>Required Con: " + trait.requiredCon + "</li>";
+      if (trait.requiredInt > 0) tooltip += "<li>Required Int: " + trait.requiredInt + "</li>";
+      if (trait.requiredSpi > 0) tooltip += "<li>Required Spi: " + trait.requiredSpi + "</li>";
+
+      if (trait.grantedBaseStr !== 0) tooltip += "<li>Granted Base Str: " + trait.grantedBaseStr + "</li>";
+      if (trait.grantedMaxStr !== 0) tooltip += "<li>Granted Max Str: " + trait.grantedMaxStr + "</li>";
+
+      if (trait.grantedBaseDex !== 0) tooltip += "<li>Granted Base Dex: " + trait.grantedBaseDex + "</li>";
+      if (trait.grantedMaxDex !== 0) tooltip += "<li>Granted Max Dex: " + trait.grantedMaxDex + "</li>";
+
+      if (trait.grantedBaseCon !== 0) tooltip += "<li>Granted Base Con: " + trait.grantedBaseCon + "</li>";
+      if (trait.grantedMaxCon !== 0) tooltip += "<li>Granted Max Con: " + trait.grantedMaxCon + "</li>";
+
+      if (trait.grantedBaseInt !== 0) tooltip += "<li>Granted Base Int: " + trait.grantedBaseInt + "</li>";
+      if (trait.grantedMaxInt !== 0) tooltip += "<li>Granted Max Int: " + trait.grantedMaxInt + "</li>";
+
+      if (trait.grantedBaseSpi !== 0) tooltip += "<li>Granted Base Spi: " + trait.grantedBaseSpi + "</li>";
+      if (trait.grantedMaxSpi !== 0) tooltip += "<li>Granted Max Spi: " + trait.grantedMaxSpi + "</li>";
+
+      tooltip += '</ul>';
+
+      return tooltip;
+    };
   }
 ]);
