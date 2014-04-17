@@ -23,7 +23,7 @@
     <div class="col-md-4 step1-col trait-col" ng-show="selectedBaseClass">
       <ul id="traits" class="list-unstyled component-list">
         <li data-ng-repeat="trait in traits | orderBy: 'name'" tooltip-placement="left" tooltip-append-to-body="true" tooltip-html-unsafe="{{getTraitTooltip(trait)}}">
-          <div class="component-item pointer" ng-class="{unavailable: !trait.available, active: trait.selected, requirement: trait.requirement}" ng-click="selectTrait(trait)">
+          <div class="component-item pointer" ng-class="{unavailable: !trait.available, active: trait.selected, requirement: trait.requirement, category: trait.categoryRestriction}" ng-click="selectTrait(trait)">
             {{trait.name}} ({{trait.cost}})
           </div>
         </li>
@@ -82,7 +82,7 @@
             {{trait.name}} ({{trait.cost}})
           </li>
         </ul>
-      </div>
+      </div>  
     </div>
   </div>
 </section>

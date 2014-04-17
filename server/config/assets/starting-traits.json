@@ -2,7 +2,7 @@
         "name": "Agile",
         "cost": 6,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "dexterity",
+        "category": "Dexterity",
         "requiredDex": 40,
         "grantedBaseDex": 5,
         "grantedMaxDex": 5
@@ -15,7 +15,7 @@
         "name": "Blacksmith's Apprentice",
         "cost": 8,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "apprentice",
+        "category": "Apprentice",
         "requiredStr": 40,
         "grantedBaseStr": 10,
         "grantedMaxStr": 10,
@@ -70,7 +70,7 @@
         "name": "Born in the Country",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "prohibitedRaces": ["Dwarf", "Irekei"],
         "granted": [{
             "skillPoints": [{
@@ -82,7 +82,7 @@
         "name": "Born of the Ethyri",
         "cost": 10,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "subrace",
+        "category": "Subrace",
         "grantedBaseSpi": 5,
         "grantedMaxSpi": 10,
         "granted": [{
@@ -96,7 +96,7 @@
         "name": "Born of the Gwendannen",
         "cost": 10,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "subrace",
+        "category": "Subrace",
         "grantedBaseCon": 5,
         "grantedMaxCon": 10,
         "granted": [{
@@ -110,7 +110,7 @@
         "name": "Born of the Invorri",
         "cost": 10,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "subrace",
+        "category": "Subrace",
         "grantedBaseStr": 5,
         "grantedMaxStr": 10,
         "granted": [{
@@ -124,7 +124,7 @@
         "name": "Born of the Irydnu",
         "cost": 10,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "subrace",
+        "category": "Subrace",
         "grantedBaseInt": 5,
         "grantedMaxInt": 10,
         "granted": [{
@@ -138,7 +138,7 @@
         "name": "Born of the Taripontor",
         "cost": 10,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "subrace",
+        "category": "Subrace",
         "grantedBaseDex": 5,
         "grantedMaxDex": 10,
         "granted": [{
@@ -152,7 +152,7 @@
         "name": "Bowyer Born",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "granted": [{
             "skillPoints": [{
                 "name": "Crossbow",
@@ -163,7 +163,7 @@
         "name": "Brawler",
         "cost": 4,
         "availableBaseClasses": ["Fighter"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skills": [
                 "Unarmed Combat"
@@ -177,7 +177,7 @@
         "name": "Brilliant Mind",
         "cost": 12,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "intelligence",
+        "category": "Intelligence",
         "requiredInt": 50,
         "grantedBaseInt": 10,
         "grantedMaxInt": 10
@@ -185,7 +185,7 @@
         "name": "Bruiser",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skillPoints": [{
                 "name": "Hammer",
@@ -206,7 +206,7 @@
         "name": "Clever",
         "cost": 6,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "intelligence",
+        "category": "Intelligence",
         "requiredInt": 40,
         "grantedBaseInt": 5,
         "grantedMaxInt": 5
@@ -240,7 +240,7 @@
         "name": "Eyes of the Eagle",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Rogue"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skillPoints": [{
                 "name": "Bow",
@@ -251,7 +251,7 @@
         "name": "Faith of Ages",
         "cost": 12,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "spirit",
+        "category": "Spirit",
         "requiredSpi": 50,
         "grantedBaseSpi": 10,
         "grantedMaxSpi": 10
@@ -283,7 +283,7 @@
         "name": "Healthy as an Ox",
         "cost": 12,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "constitution",
+        "category": "Constitution",
         "requiredCon": 50,
         "grantedBaseCon": 10,
         "grantedMaxCon": 10
@@ -291,7 +291,7 @@
         "name": "Hearty",
         "cost": 12,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "constitution",
+        "category": "Constitution",
         "requiredCon": 40,
         "grantedBaseCon": 5,
         "grantedMaxCon": 5
@@ -299,7 +299,7 @@
         "name": "Hero's Strength",
         "cost": 12,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "strength",
+        "category": "Strength",
         "requiredStr": 50,
         "grantedBaseStr": 10,
         "grantedMaxStr": 10
@@ -307,7 +307,7 @@
         "name": "Hunter",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skillPoints": [{
                 "name": "Spear",
@@ -318,35 +318,35 @@
         "name": "Increased Constitution",
         "cost": 2,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "increaseConstitution",
+        "category": "Increase Maximum Constitution",
         "grantedBaseCon": 1,
         "grantedMaxCon": 3
     }, {
         "name": "Increased Dexterity",
         "cost": 2,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "increaseDexterity",
+        "category": "Increase Maximum Dexterity",
         "grantedBaseDex": 1,
         "grantedMaxDex": 3
     }, {
         "name": "Increased Intelligence",
         "cost": 2,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "increaseIntelligence",
+        "category": "Increase Maximum Intelligence",
         "grantedBaseInt": 1,
         "grantedMaxInt": 3
     }, {
         "name": "Increased Spirit",
         "cost": 2,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "increaseSpirit",
+        "category": "Increase Maximum Spirit",
         "grantedBaseSpi": 1,
         "grantedMaxSpi": 3
     }, {
         "name": "Increased Strength",
         "cost": 2,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "increaseStrength",
+        "category": "Increase Maximum Strength",
         "grantedBaseStr": 1,
         "grantedMaxStr": 3
     }, {
@@ -384,7 +384,7 @@
         "name": "Knife-Fighter",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skillPoints": [{
                 "name": "Dagger",
@@ -395,7 +395,7 @@
         "name": "Knight's Squire",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Rogue"],
-        "category": "mentor",
+        "category": "Mentor",
         "granted": [{
             "skillPoints": [{
                 "name": "Medium Armour",
@@ -406,7 +406,7 @@
         "name": "Lightning Reflexes",
         "cost": 12,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "dexterity",
+        "category": "Dexterity",
         "requiredDex": 50,
         "grantedBaseDex": 10,
         "grantedMaxDex": 10
@@ -424,7 +424,7 @@
         "name": "Mercenary",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skillPoints": [{
                 "name": "Polearm",
@@ -435,7 +435,7 @@
         "name": "Mighty",
         "cost": 6,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "strength",
+        "category": "Strength",
         "requiredStr": 40,
         "grantedBaseStr": 5,
         "grantedMaxStr": 5
@@ -443,7 +443,7 @@
         "name": "Military Training",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Rogue"],
-        "category": "mentor",
+        "category": "Mentor",
         "granted": [{
             "skillPoints": [{
                 "name": "Light Armour",
@@ -464,7 +464,7 @@
         "name": "Priest's Acolyte",
         "cost": 8,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "apprentice",
+        "category": "Apprentice",
         "requiredSpi": 40,
         "grantedBaseSpi": 10,
         "grantedMaxSpi": 10,
@@ -548,7 +548,7 @@
         "name": "Raised by Barbarians",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "prohibitedRaces": ["Dwarf", "Elf", "Irekei", "Minotaur"],
         "granted": [{
             "skillPoints": [{
@@ -560,7 +560,7 @@
         "name": "Raised by Centaurs",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "prohibitedRaces": ["Aracoix", "Centaur", "Elf", "Minotaur"],
         "granted": [{
             "skillPoints": [{
@@ -572,7 +572,7 @@
         "name": "Raised by Dwarves",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "prohibitedRaces": ["Dwarf", "Elf"],
         "granted": [{
             "skillPoints": [{
@@ -584,7 +584,7 @@
         "name": "Raised by Elves",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "prohibitedRaces": ["Dwarf", "Elf", "Irekei", "Centaur"],
         "granted": [{
             "skillPoints": [{
@@ -596,7 +596,7 @@
         "name": "Raised by Thieves' Guild",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "prohibitedRaces": ["Dwarf"],
         "granted": [{
             "skillPoints": [{
@@ -608,7 +608,7 @@
         "name": "Raised in the Woods",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "prohibitedRaces": ["Dwarf", "Irekei"],
         "granted": [{
             "skillPoints": [{
@@ -620,7 +620,7 @@
         "name": "Scion of the Dar Khelegur",
         "cost": 10,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "subrace",
+        "category": "Subrace",
         "grantedBaseInt": 5,
         "grantedMaxInt": 10,
         "granted": [{
@@ -634,7 +634,7 @@
         "name": "Scion of the Gwaridorn",
         "cost": 10,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "subrace",
+        "category": "Subrace",
         "grantedBaseCon": 5,
         "grantedMaxCon": 10,
         "granted": [{
@@ -648,7 +648,7 @@
         "name": "Scion of the Twathedilion",
         "cost": 10,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "subrace",
+        "category": "Subrace",
         "grantedBaseDex": 5,
         "grantedMaxDex": 10,
         "granted": [{
@@ -662,7 +662,7 @@
         "name": "Sellsword",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skillPoints": [{
                 "name": "Sword",
@@ -673,7 +673,7 @@
         "name": "Sharpshooter",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skillPoints": [{
                 "name": "Crossbow",
@@ -684,7 +684,7 @@
         "name": "Shopkeeper's Apprentice",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "mentor",
+        "category": "Mentor",
         "requiredInt": 50,
         "granted": [{
             "skills": [
@@ -705,7 +705,7 @@
         "name": "Sold to the Pits",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "granted": [{
             "skills": [
                 "Unarmed Combat"
@@ -719,7 +719,7 @@
         "name": "Soldier Born",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "childhood",
+        "category": "Childhood",
         "granted": [{
             "skillPoints": [{
                 "name": "Polearm",
@@ -771,7 +771,7 @@
         "name": "Taught by Blademaster",
         "cost": 4,
         "availableBaseClasses": ["Fighter"],
-        "category": "mentor",
+        "category": "Mentor",
         "granted": [{
             "skillPoints": [{
                 "name": "Parry",
@@ -782,7 +782,7 @@
         "name": "Taught by Master Thief",
         "cost": 8,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "apprentice",
+        "category": "Apprentice",
         "requiredDex": 40,
         "grantedBaseDex": 10,
         "grantedMaxDex": 10,
@@ -839,7 +839,7 @@
         "name": "Trained by Master-of-Arms",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer"],
-        "category": "mentor",
+        "category": "Mentor",
         "granted": [{
             "skillPoints": [{
                 "name": "Block",
@@ -850,7 +850,7 @@
         "name": "Traveling Performer",
         "cost": 4,
         "availableBaseClasses": ["Rogue"],
-        "category": "mentor",
+        "category": "Mentor",
         "granted": [{
             "skillPoints": [{
                 "name": "Dodge",
@@ -861,7 +861,7 @@
         "name": "True Faith",
         "cost": 6,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "spirit",
+        "category": "Spirit",
         "requiredSpi": 40,
         "grantedBaseSpi": 5,
         "grantedMaxSpi": 5
@@ -869,7 +869,7 @@
         "name": "Wanderer",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skillPoints": [{
                 "name": "Staff",
@@ -880,7 +880,7 @@
         "name": "Warlord's Page",
         "cost": 8,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "apprentice",
+        "category": "Apprentice",
         "requiredCon": 40,
         "grantedBaseCon": 10,
         "grantedMaxCon": 10,
@@ -904,7 +904,7 @@
         "name": "Wizard's Apprentice",
         "cost": 8,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "apprentice",
+        "category": "Apprentice",
         "requiredInt": 40,
         "grantedBaseInt": 10,
         "grantedMaxInt": 10,
@@ -916,7 +916,7 @@
         "name": "Woodsman",
         "cost": 4,
         "availableBaseClasses": ["Fighter", "Healer", "Mage", "Rogue"],
-        "category": "background",
+        "category": "Background",
         "granted": [{
             "skillPoints": [{
                 "name": "Axe",

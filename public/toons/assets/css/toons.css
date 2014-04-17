@@ -39,6 +39,10 @@
   background-color: #fff;
 }
 
+.category, .category:hover {
+  background-color: #FFD8B3;
+}
+
 .stats {
   font-size: 18px;
   text-align: center;

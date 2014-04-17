@@ -27,6 +27,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.remainingPoints = $scope.maxPoints = 55;
       $scope.selectedBaseClass = null;
       $scope.selectedRace = null;
+      $scope.selectedTraitCategories = [];
 
       $scope.baseClasses = [{
         'name': 'Fighter',
@@ -214,6 +215,9 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       if (!trait.available) {
         growl.addWarnMessage("Trait not available.", {ttl: 5000});
         return false;
+      } else if (trait.categoryRestriction) {
+        growl.addWarnMessage(trait.category + " trait already selected.", {ttl: 5000});
+        return false;        
       } else if (trait.requirement) {
         growl.addWarnMessage(trait.requirementMessage + " for this trait", {ttl: 5000});
         return false;
@@ -234,6 +238,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
             changeMaxStats('constitution', trait.grantedMaxCon);
             changeMaxStats('intelligence', trait.grantedMaxInt);
             changeMaxStats('spirit', trait.grantedMaxSpi);  
+
+            if (trait.category) $scope.selectedTraitCategories.push(trait.category);
           } else {
             growl.addWarnMessage("Not enough points to apply trait", {ttl: 5000});
           }
@@ -260,6 +266,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       changeMaxStats('constitution', trait.grantedMaxCon * -1);
       changeMaxStats('intelligence', trait.grantedMaxInt * -1);
       changeMaxStats('spirit', trait.grantedMaxSpi * -1);
+
+      if (trait.category) $scope.selectedTraitCategories.splice($scope.selectedTraitCategories.indexOf(trait.category), 1);
     };
 
     function unselectAllTraits() {
@@ -281,7 +289,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
         }
       });
-    }    
+    }
 
     function checkStatRequirements(obj) {
       //First check if anything have requirements beyond current stats
@@ -350,11 +358,31 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
               deselectTrait(trait);
             }
           }
+
+          if (checkCategoryRestriction(trait)) {
+            trait.categoryRestriction = true;
+          } else {
+            trait.categoryRestriction = false;
+          }
+
         } else {
           trait.available = false;
           if (trait.selected) deselectTrait(trait);
         }
       });
+    }
+
+    function checkCategoryRestriction(trait) {
+      //If there are selected traits with categories AND 
+      //trait.category is among the selected trait cateogires AND
+      //the current trait is NOT the selected one (so it can be deselected)
+      if ($scope.selectedTraitCategories.length > 0 && 
+          $scope.selectedTraitCategories.indexOf(trait.category) !== -1 && 
+          !trait.selected) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
     function changeBaseStats(stat, val) {
@@ -511,6 +539,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       var tooltip = '<ul class="list-unstyled trait-tooltip">'
 
       tooltip += "<li>Creation Cost: " + trait.cost + "</li>";
+
+      if (trait.category) tooltip += "<li>Category: " + trait.category;
 
       if (trait.availableBaseClasses.length < 4) tooltip += "<li>Available: " + trait.availableBaseClasses.join(", "); + "</li>";      
 
