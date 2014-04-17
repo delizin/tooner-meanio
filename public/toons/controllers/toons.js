@@ -304,8 +304,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         return {status: true, response: obj.name + " no longer meets Constitution requirements and was removed."};
       } else if (obj.selected && ($scope.stats.currentIntelligence - obj.grantedBaseInt) < obj.requiredInt) {
         return {status: true, response: obj.name + " no longer meets Intelligence requirements and was removed."};
-      } else if (obj.selected && ($scope.stats.currentIntelligence - obj.grantedBaseInt) < obj.requiredInt) {
-        return {status: true, response: obj.name + " no longer meets Intelligence requirements and was removed."};        
+      } else if (obj.selected && ($scope.stats.currentSpirit - obj.grantedBaseSpi) < obj.requiredSpi) {
+        return {status: true, response: obj.name + " no longer meets Spirit requirements and was removed."};        
       } else {
         return {status: false};
       }
@@ -346,7 +346,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
             trait.requirement = true;
             trait.requirementMessage = requirement.response;
             if (trait.selected) {
-              growl.addWarnMessage(trait.requirementMessage, {ttl: 5000});
+              growl.addWarnMessage(trait.name + " was removed: " + trait.requirementMessage, {ttl: 5000});
               deselectTrait(trait);
             }
           }
