@@ -295,15 +295,17 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         return {status: true, response: "Not enough Intelligence"};
       } else if ($scope.stats.currentSpirit < obj.requiredSpi) {
         return {status: true, response: "Not enough Spirit"};
-      //Then check if we need to remove currently applied traits
+      //Then check if we need to remove currently applied rune
       } else if (obj.selected && ($scope.stats.currentStrength - obj.grantedBaseStr) < obj.requiredStr) {
         return {status: true, response: obj.name + " no longer meets Strength requirements and was removed."};
       } else if (obj.selected && ($scope.stats.currentDexterity - obj.grantedBaseDex) < obj.requiredDex) {
         return {status: true, response: obj.name + " no longer meets Dexterity requirements and was removed."};
       } else if (obj.selected && ($scope.stats.currentConstitution - obj.grantedBaseCon) < obj.requiredCon) {
         return {status: true, response: obj.name + " no longer meets Constitution requirements and was removed."};
-      } else if (obj.selected && ($scope.stats.currentConstitution - obj.grantedBaseCon) < obj.requiredCon) {
-        return {status: true, response: obj.name + " no longer meets Constitution requirements and was removed."};        
+      } else if (obj.selected && ($scope.stats.currentIntelligence - obj.grantedBaseInt) < obj.requiredInt) {
+        return {status: true, response: obj.name + " no longer meets Intelligence requirements and was removed."};
+      } else if (obj.selected && ($scope.stats.currentIntelligence - obj.grantedBaseInt) < obj.requiredInt) {
+        return {status: true, response: obj.name + " no longer meets Intelligence requirements and was removed."};        
       } else {
         return {status: false};
       }
@@ -323,12 +325,20 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     function getAvailableTraits() {
       var baseClass = $scope.selectedBaseClass;
-      //var race = $scope.selectedRace;
+      var race = $scope.selectedRace;
 
       $scope.traits.forEach(function(trait) {
-        if (baseClass && trait.availableBaseClasses.indexOf(baseClass.name) !== -1) {
+        //If a base class is selected AND the selected base class is an available base class to this trait
+        //If a race is selected AND the currently selected race is NOT a prohibited race for this trait
+        //If there are no required races for this trait OR 
+        //There is at least one required race and the currently selected race is in the required races list
+        //WELCOME TO SHADOWBANE
+        if (baseClass && trait.availableBaseClasses.indexOf(baseClass.name) !== -1 && 
+           (race && trait.prohibitedRaces.indexOf(race.name) === -1) &&
+           (trait.requiredRaces.length === 0 || (trait.requiredRaces.length > 0 && trait.requiredRaces.indexOf(race.name) !== -1))) {
           trait.available = true;
 
+          //Oh we also have to check if the trait has minimum stat requirements!
           var requirement = checkStatRequirements(trait);
           if (!requirement.status) {
             trait.requirement = false;
@@ -501,6 +511,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       var tooltip = '<ul class="list-unstyled trait-tooltip">'
 
       tooltip += "<li>Creation Cost: " + trait.cost + "</li>";
+
+      if (trait.availableBaseClasses.length < 4) tooltip += "<li>Available: " + trait.availableBaseClasses.join(", "); + "</li>";      
 
       if (trait.requiredRaces.length > 0) tooltip += "<li>Required: " + trait.requiredRaces.join(", "); + "</li>";
       if (trait.prohibitedRaces.length > 0) tooltip += "<li>Prohibited: " + trait.prohibitedRaces.join(", "); + "</li>";
