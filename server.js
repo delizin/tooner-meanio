@@ -48,6 +48,11 @@ mongoose.connection.once('open', function() {
     Race.remove().exec()
     .then(function() { Race.seed(require('./server/config/assets/races.json')); });
 
+    var Prestige = mongoose.model('Prestige');
+
+    Prestige.remove().exec()
+    .then(function() { Prestige.seed(require('./server/config/assets/prestigeClasses.json')); });
+
     console.log('Finished seeding');
   }
 });

@@ -1,0 +1,7 @@
+<section data-ng-controller="PrestigesController" data-ng-init="find()">
+	<ul class="prestiges unstyled">
+		<li data-ng-repeat="prestige in prestiges">
+			<h2><a data-ng-href="#!/prestiges/{{prestige._id}}">{{prestige.name}}</a></h2>
+		</li>
+	</ul>
+</section>
