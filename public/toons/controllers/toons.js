@@ -142,10 +142,13 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         changeMaxStats('spirit', $scope.selectedRace.grantedMaxSpi * -1);
       }
 
-      //Then unselect all traits before switching
-      unselectAllTraits();
+      //Then deselect all traits before switching
+      deselectAllTraits();
 
-      //If race is already select then unselect it
+      //Then refund stat points
+      refundStatPoints();
+
+      //If race is already select then deselect it
       if (race === $scope.selectedRace) {
         $scope.selectedRace = null;
         $scope.chooseBaseClass($scope.selectedBaseClass);
@@ -174,7 +177,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
       //Race is selected, get available base classes and verify currently selected base class
       getAvailableBaseClasses();
-      //If the selected base class is not available to the newly selected race then unselect the base class
+      //If the selected base class is not available to the newly selected race then deselect the base class
       if ($scope.selectedBaseClass && !$scope.selectedBaseClass.available) {
         $scope.chooseBaseClass($scope.selectedBaseClass);
       }
@@ -192,7 +195,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         changeBaseStats('spirit', $scope.selectedBaseClass.grantedBaseSpi * -1);
       }
 
-      unselectAllTraits();
+      deselectAllTraits();
 
       if (baseClass === $scope.selectedBaseClass) {
         $scope.selectedBaseClass = null;
@@ -270,24 +273,9 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       if (trait.category) $scope.selectedTraitCategories.splice($scope.selectedTraitCategories.indexOf(trait.category), 1);
     };
 
-    function unselectAllTraits() {
+    function deselectAllTraits() {
       $scope.traits.forEach(function(trait) {
-        if (trait.selected) {
-          changeBaseStats('strength', trait.grantedBaseStr * -1);
-          changeBaseStats('dexterity', trait.grantedBaseDex * -1);
-          changeBaseStats('constitution', trait.grantedBaseCon * -1);
-          changeBaseStats('intelligence', trait.grantedBaseInt * -1);
-          changeBaseStats('spirit', trait.grantedBaseSpi * -1);
-
-          changeMaxStats('strength', trait.grantedMaxStr * -1);
-          changeMaxStats('dexterity', trait.grantedMaxDex * -1);
-          changeMaxStats('constitution', trait.grantedMaxCon * -1);
-          changeMaxStats('intelligence', trait.grantedMaxInt * -1);
-          changeMaxStats('spirit', trait.grantedMaxSpi * -1);
-          $scope.remainingPoints += trait.cost;
-          trait.selected = false;
-
-        }
+        if (trait.selected) deselectTrait(trait);
       });
     }
 
@@ -533,6 +521,28 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         }
         getAvailableTraits();
       }
+    };
+
+    function refundStatPoints() {
+      var strDiff = $scope.stats.currentStrength - $scope.stats.baseStrength; 
+      $scope.remainingPoints += strDiff;
+      $scope.stats.currentStrength -= strDiff;
+
+      var dexDiff = $scope.stats.currentDexterity - $scope.stats.baseDexterity; 
+      $scope.remainingPoints += dexDiff;
+      $scope.stats.currentDexterity -= dexDiff;
+
+      var conDiff = $scope.stats.currentConstitution - $scope.stats.baseConstitution; 
+      $scope.remainingPoints += conDiff;
+      $scope.stats.currentConstitution -= conDiff;
+
+      var intDiff = $scope.stats.currentIntelligence - $scope.stats.baseIntelligence; 
+      $scope.remainingPoints += intDiff;
+      $scope.stats.currentIntelligence -= intDiff;
+
+      var spiDiff = $scope.stats.currentSpirit - $scope.stats.baseSpirit; 
+      $scope.remainingPoints += spiDiff;
+      $scope.stats.currentSpirit -= spiDiff;
     };
 
     $scope.getTraitTooltip = function(trait) {
