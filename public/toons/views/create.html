@@ -1,5 +1,6 @@
 <section data-ng-controller="ToonsController" data-ng-init="findComponents()">
-	<div class="row first-row">
+  <!-- START Level 1 Row -->
+	<div class="row first-row" ng-show="toonLevel === 1">
     <div class="col-md-4 step1-col">
       <ul id="races" class="list-unstyled component-list">
         <li data-ng-repeat="race in races">
@@ -22,7 +23,7 @@
       
     <div class="col-md-4 step1-col trait-col" ng-show="selectedBaseClass">
       <ul id="traits" class="list-unstyled component-list">
-        <li data-ng-repeat="trait in traits | orderBy: 'name'" tooltip-placement="left" tooltip-append-to-body="true" tooltip-html-unsafe="{{getTraitTooltip(trait)}}">
+        <li data-ng-repeat="trait in traits | orderBy: 'name'" tooltip-placement="left" tooltip-append-to-body="true" tooltip-html-unsafe="{{getTraitTooltip(trait)}}" ng-class="{hidden: !trait.available && hideUnavailable === true}">
           <div class="component-item pointer" ng-class="{unavailable: !trait.available, active: trait.selected, requirement: trait.requirement, category: trait.categoryRestriction}" ng-click="selectTrait(trait)">
             {{trait.name}} ({{trait.cost}})
           </div>
@@ -30,6 +31,27 @@
       </ul>
     </div>
   </div>
+  <!-- END Level 1 Row -->
+
+  <div class="row unavailable-row">
+    <div class="col-md-4 col-md-offset-8 col-xs-12">
+      <div class="checkbox unavailable-checkbox">
+        <label ng-show="selectedBaseClass && toonLevel === 1">
+          <input type="checkbox" ng-model="showCheckbox" ng-change="hideUnavailable = !showCheckbox"> Show Unavailable Traits
+        </label>
+        <label ng-show="toonLevel === 70">
+          <input type="checkbox" ng-model="showCheckbox" ng-change="hideUnavailable = !showCheckbox"> Show Unavailable Disciplines
+        </label>        
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <button type="button" class="btn btn-lg" ng-class="toonLevel === 1 ? 'btn-primary' : 'btn-default'" ng-click="changeToonLevel(1)">Level 1</button>
+      <button type="button" ng-disabled="!selectedBaseClass" class="btn btn-lg" ng-class="toonLevel === 70 ? 'btn-primary' : 'btn-default'" ng-click="changeToonLevel(70)">Level 70</button>
+    </div>
+  </div> 
 
   <div class="row">
     <div class="col-md-12">

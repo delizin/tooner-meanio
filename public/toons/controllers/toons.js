@@ -28,6 +28,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.selectedBaseClass = null;
       $scope.selectedRace = null;
       $scope.selectedTraitCategories = [];
+      $scope.hideUnavailable = true;
+      $scope.toonLevel = 1;
 
       $scope.baseClasses = [{
         'name': 'Fighter',
@@ -123,6 +125,10 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         $scope.races = races;
       });
     };
+
+    $scope.changeToonLevel = function(num) {
+      $scope.toonLevel = num;
+    }
 
     $scope.chooseRace = function(race) {
       //First remove the currently selected race's stats

@@ -7,6 +7,10 @@
   height: 500px;
 }
 
+.unavailable-row {
+  height: 45px;
+}
+
 .component-list li {
   width: 100%;
   text-align: center;
@@ -29,6 +33,10 @@
 .unavailable {
   color: #ddd;
   background-color: #fff !important;
+}
+
+.hidden {
+  display: none;
 }
 
 .requirement, .requirement:hover {
@@ -86,12 +94,26 @@
   width: 350px;
 }
 
+.unavailable-checkbox {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.unavailable-checkbox input[type=checkbox]
+{
+  -ms-transform: scale(1.2); /* IE */
+  -moz-transform: scale(1.2); /* FF */
+  -webkit-transform: scale(1.2); /* Safari and Chrome */
+  -o-transform: scale(1.2); /* Opera */
+  margin-top: 6px;
+}
+
 @media only screen and (max-width : 1224px) {
   .component-list li {
     font-size: 20px;
   }
 
-  .first-row {
+  .first-row, .unavailable-row {
     height: auto;
   }
 }
