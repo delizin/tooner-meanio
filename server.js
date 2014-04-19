@@ -53,6 +53,17 @@ mongoose.connection.once('open', function() {
     Prestige.remove().exec()
     .then(function() { Prestige.seed(require('./server/config/assets/prestigeClasses.json')); });
 
+    var Discipline = mongoose.model('Discipline');
+
+    Discipline.remove().exec()
+    .then(function() { Discipline.seed(require('./server/config/assets/disciplines.json')); });
+
+    var StatRune = mongoose.model('StatRune');
+
+    StatRune.remove().exec()
+    .then(function() { StatRune.seed(require('./server/config/assets/stat-runes.json')); });
+
+
     console.log('Finished seeding');
   }
 });

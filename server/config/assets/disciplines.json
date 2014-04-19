@@ -1,8 +1,10 @@
-{
-    "disciplines": [{
+[
+    {
         "name": "Animator",
+        "availableBaseClasses": ["Mage", "Healer", "Rogue"],
         "availableRaces": ["Aelfborn", "Dwarf", "Elf", "Human", "Shade"],
-        "classesAvailable": ["Bard", "Confessor", "Fury", "Prelate", "Priest"]
+        "availablePrestigeClasses": ["Bard", "Confessor", "Fury", "Prelate", "Priest"],
+        "disciplinesProhibited": []
     }, {
         "name": "Archer",
         "availableBaseClasses": ["Fighter, Healer", "Mage", "Rogue"],
@@ -279,5 +281,5 @@
         "availableRaces": ["Aelfborn", "Aracoix", "Centaur", "Dwarf", "Elf", "Half Giant", "Human", "Nephilim", "Shades", "Vampire"],
         "availablePrestigeClasses": ["Assassin", "Barbarian", "Bard", "Crusader", "Huntress", "Necromancer", "Priest", "Ranger", "Sentinel", "Templar", "Thief", "Warrior", "Wizard"],
         "disciplinesProhibited": []
-    }]
-}
+    }
+]

@@ -62,6 +62,9 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       }]
     };
 
+    $scope.masteryRunes = ["Master of Axes", "Master of Daggers", "Master of Great Axes", "Master of Great Hammers", "Master of Great Swords", "Master of Hammers", "Master of Pole Arms", "Master of Spears", "Master of Staves", "Master of Swords", "Master of Throwing"]
+
+
     $scope.create = function() {
       var toon = new Toons({
         title: this.title,

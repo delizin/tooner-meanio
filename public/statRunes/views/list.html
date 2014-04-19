@@ -1,0 +1,7 @@
+<section data-ng-controller="StatRunesController" data-ng-init="find()">
+	<ul class="statRunes unstyled">
+		<li data-ng-repeat="statRune in statRunes">
+			<h2><a data-ng-href="#!/statRunes/{{statRune._id}}">{{statRune.name}}</a></h2>
+		</li>
+	</ul>
+</section>

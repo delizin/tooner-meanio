@@ -1,0 +1,7 @@
+<section data-ng-controller="DisciplinesController" data-ng-init="find()">
+	<ul class="disciplines unstyled">
+		<li data-ng-repeat="discipline in disciplines">
+			<h2><a data-ng-href="#!/disciplines/{{discipline._id}}">{{discipline.name}}</a></h2>
+		</li>
+	</ul>
+</section>
