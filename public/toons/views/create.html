@@ -1,8 +1,9 @@
 <section data-ng-controller="ToonsController" data-ng-init="findComponents()">
   <!-- START Level 1 Row -->
 	<div class="row first-row" ng-show="toonLevel === 1">
-    <div class="col-md-4 step1-col">
-      <ul id="races" class="list-unstyled component-list">
+
+    <div class="col-md-4">
+      <ul class="list-unstyled component-list">
         <li data-ng-repeat="race in races">
           <div class="component-item pointer" ng-class="{active: selectedRace.name === race.name}" ng-click="chooseRace(race)">
             {{race.name}} ({{race.cost}})
@@ -11,8 +12,8 @@
       </ul>
     </div>
       
-    <div class="col-md-4 step1-col" ng-show="selectedRace">
-      <ul id="bases" class="list-unstyled component-list">
+    <div class="col-md-4" ng-show="selectedRace">
+      <ul class="list-unstyled component-list">
         <li data-ng-repeat="class in baseClasses">
           <div class="component-item pointer" ng-class="{active: selectedBaseClass.name === class.name, unavailable: !class.available}" ng-click="chooseBaseClass(class)">
             {{class.name}}
@@ -21,8 +22,8 @@
       </ul>
     </div>
       
-    <div class="col-md-4 step1-col trait-col" ng-show="selectedBaseClass">
-      <ul id="traits" class="list-unstyled component-list">
+    <div class="col-md-4 overflow-col" ng-show="selectedBaseClass">
+      <ul class="list-unstyled component-list">
         <li data-ng-repeat="trait in traits | orderBy: 'name'" tooltip-placement="left" tooltip-append-to-body="true" tooltip-html-unsafe="{{getTraitTooltip(trait)}}" ng-class="{hidden: !trait.available && hideUnavailable === true}">
           <div class="component-item pointer" ng-class="{unavailable: !trait.available, active: trait.selected, requirement: trait.requirement, category: trait.categoryRestriction}" ng-click="selectTrait(trait)">
             {{trait.name}} ({{trait.cost}})
@@ -33,6 +34,47 @@
   </div>
   <!-- END Level 1 Row -->
 
+  <!-- START Level 75 Row -->      
+  <div class="row first-row" ng-show="toonLevel === 75">
+
+    <div class="col-md-4 overflow-col">
+      <ul class="list-unstyled component-list">
+        <li data-ng-repeat="prestigeClass in prestigeClasses">
+          <div class="component-item pointer" ng-class="{active: selectedPrestigeClass.name === prestigeClass.name}" ng-click="choosePrestigeClass(prestigeClass)">
+            {{prestigeClass.name}}
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-4 overflow-col" ng-show="selectedPrestigeClass">
+      <ul class="list-unstyled component-list">
+        <li data-ng-repeat="statRune in statRunes">
+          <div class="component-item pointer" ng-class="{active: statRune.selected}" ng-click="chooseStatRune(statRune)">
+            {{statRune.name}} ({{statRune.cost}})
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-4 overflow-col" ng-show="selectedPrestigeClass">
+      <ul class="list-unstyled component-list">
+        <li data-ng-repeat="discipline in disciplines">
+          <div class="component-item pointer" ng-class="{active: discipline.selected}" ng-click="chooseDisciplineRune(discipline)">
+            {{discipline.name}}
+          </div>
+        </li>
+        <li data-ng-repeat="masteryRune in masteryRunes">
+          <div class="component-item pointer" ng-click="chooseMasteryRune(masteryRune)">
+            {{masteryRune}} (5)
+          </div>
+        </li>        
+      </ul>
+    </div>
+
+  </div>
+  <!-- END Level 75 Row -->
+
   <div class="row unavailable-row">
     <div class="col-md-4 col-md-offset-8 col-xs-12">
       <div class="checkbox unavailable-checkbox">
@@ -40,7 +82,7 @@
           <input type="checkbox" ng-model="showCheckbox" ng-change="hideUnavailable = !showCheckbox"> Show Unavailable Traits
         </label>
         <label ng-show="toonLevel === 75">
-          <input type="checkbox" ng-model="showCheckbox" ng-change="hideUnavailable = !showCheckbox"> Show Unavailable Disciplines
+          <input type="checkbox" ng-model="showCheckbox" ng-change="hideUnavailable = !showCheckbox"> Show Unavailable Runes
         </label>        
       </div>
     </div>

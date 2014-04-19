@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'growl', 'Races', 'Traits', 'Toons',
-  function($scope, $stateParams, $location, Global, growl, Races, Traits, Toons) {
+angular.module('mean.toons').controller('ToonsController', ['$scope', '$stateParams', '$location', 'Global', 'growl', 'Races', 'Traits', 'Disciplines', 'StatRunes', 'Prestiges', 'Toons',
+  function($scope, $stateParams, $location, Global, growl, Races, Traits, Disciplines, StatRunes, Prestiges, Toons) {
     $scope.global = Global;
     init();
 
@@ -29,7 +29,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.selectedRace = null;
       $scope.selectedTraitCategories = [];
       $scope.hideUnavailable = true;
-      $scope.toonLevel = 1;
+      $scope.toonLevel = 75;
 
       $scope.baseClasses = [{
         'name': 'Fighter',
@@ -127,6 +127,18 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       Races.query(function(races) {
         $scope.races = races;
       });
+
+      Prestiges.query(function(prestigeClasses) {
+        $scope.prestigeClasses = prestigeClasses;
+      });
+
+      StatRunes.query(function(statRunes) {
+        $scope.statRunes = statRunes;
+      });
+
+      Disciplines.query(function(disciplines) {
+        $scope.disciplines = disciplines;
+      });      
     };
 
     $scope.changeToonLevel = function(num) {
@@ -287,6 +299,10 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         if (trait.selected) deselectTrait(trait);
       });
     }
+
+    $scope.choosePrestigeClass = function(name) {
+      $scope.selectedPrestigeClass = name;
+    };
 
     function checkStatRequirements(obj) {
       //First check if anything have requirements beyond current stats
