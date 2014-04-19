@@ -39,7 +39,7 @@
         <label ng-show="selectedBaseClass && toonLevel === 1">
           <input type="checkbox" ng-model="showCheckbox" ng-change="hideUnavailable = !showCheckbox"> Show Unavailable Traits
         </label>
-        <label ng-show="toonLevel === 70">
+        <label ng-show="toonLevel === 75">
           <input type="checkbox" ng-model="showCheckbox" ng-change="hideUnavailable = !showCheckbox"> Show Unavailable Disciplines
         </label>        
       </div>
@@ -49,7 +49,7 @@
   <div class="row">
     <div class="col-md-12 text-center">
       <button type="button" class="btn btn-lg" ng-class="toonLevel === 1 ? 'btn-primary' : 'btn-default'" ng-click="changeToonLevel(1)">Level 1</button>
-      <button type="button" ng-disabled="!selectedBaseClass" class="btn btn-lg" ng-class="toonLevel === 70 ? 'btn-primary' : 'btn-default'" ng-click="changeToonLevel(70)">Level 70</button>
+      <button type="button" ng-disabled="!selectedBaseClass" class="btn btn-lg" ng-class="toonLevel === 75 ? 'btn-primary' : 'btn-default'" ng-click="changeToonLevel(75)">Level 75</button>
     </div>
   </div> 
 
