@@ -60,46 +60,44 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         'grantedBaseCon': 0,
         'grantedBaseInt': 5,
         'grantedBaseSpi': 5
-      }]
+      }];
+
+        $scope.masteries = [{
+          'name': 'Master of Axes',
+          'cost': 5
+        }, {
+          'name': 'Master of Daggers',
+          'cost': 5
+        }, {
+          'name': 'Master of Great Axes',
+          'cost': 5
+        }, {
+          'name': 'Master of Great Hammers',
+          'cost': 5
+        }, {
+          'name': 'Master of Great Swords',
+          'cost': 5
+        }, {
+          'name': 'Master of Hammers',
+          'cost': 5
+        }, {
+          'name': 'Master of Pole Arms',
+          'cost': 5
+        }, {
+          'name': 'Master of Spears',
+          'cost': 5
+        }, {
+          'name': 'Master of Staves',
+          'cost': 5
+        }, {
+          'name': 'Master of Swords',
+          'cost': 5
+        }, {
+          'name': 'Master of Throwing',
+          'cost': 5
+        }
+      ];
     };
-
-    $scope.masteries = [{
-      'name': 'Master of Axes',
-      'cost': 5
-    }, {
-      'name': 'Master of Daggers',
-      'cost': 5
-    }, {
-      'name': 'Master of Great Axes',
-      'cost': 5
-    }, {
-      'name': 'Master of Great Hammers',
-      'cost': 5
-    }, {
-      'name': 'Master of Great Swords',
-      'cost': 5
-    }, {
-      'name': 'Master of Hammers',
-      'cost': 5
-    }, {
-      'name': 'Master of Pole Arms',
-      'cost': 5
-    }, {
-      'name': 'Master of Spears',
-      'cost': 5
-    }, {
-      'name': 'Master of Staves',
-      'cost': 5
-    }, {
-      'name': 'Master of Swords',
-      'cost': 5
-    }, {
-      'name': 'Master of Throwing',
-      'cost': 5
-    }
-  ]
-
-
 
     $scope.create = function() {
       var toon = new Toons({
@@ -177,17 +175,17 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       });      
     };
 
-
     $scope.chooseMinLevel = function() {
       $scope.toonLevel = 1;
+      $scope.remainingPoints -= 150;
     }
 
     $scope.chooseMaxLevel = function() {
       $scope.toonLevel = 75;
+      $scope.remainingPoints += 150;
 
       getAvailablePrestigeClasses();
     }
-
 
     $scope.chooseRace = function(race) {
       //First remove the currently selected race's stats
@@ -237,7 +235,6 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         } else {
           growl.addWarnMessage("Not enough points to select this race", {ttl: 5000});
         }
-        
       }
 
       //Race is selected, get available base classes and verify currently selected base class
@@ -355,7 +352,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         growl.addWarnMessage("Discipline not available.", {ttl: 5000});
         return false;
       } else if (disc.prohibited) {
-        growl.addWarnMessage("Current selection prohibits you from selecting this discipline.", {ttl: 5000});
+        growl.addWarnMessage("Current selection prohibits you from selecting this discipline", {ttl: 5000});
         return false;        
       } else {
         if(!disc.selected) {
@@ -374,6 +371,26 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       }
 
       getAvailableDisciplines();
+    };
+
+    $scope.selectMastery = function(mastery) {
+      if (!mastery.available) {
+        growl.addWarnMessage("Mastery not available.", {ttl: 5000});
+        return false;
+      } else {
+        if(!mastery.selected) {
+          if (mastery.cost <= $scope.remainingPoints) {
+            mastery.selected = true;
+            $scope.remainingPoints -= mastery.cost;
+          } else {
+            growl.addWarnMessage("Not enough points to apply mastery", {ttl: 5000});
+          }
+          
+        } else {
+          mastery.selected = false;
+          $scope.remainingPoints += mastery.cost;
+        }
+      }
     };
 
     function checkStatRequirements(obj) {
