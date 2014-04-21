@@ -47,7 +47,7 @@
   background-color: #fff;
 }
 
-.category, .category:hover {
+.category, .category:hover, .prohibited, .prohibited:hover {
   background-color: #FFD8B3;
 }
 

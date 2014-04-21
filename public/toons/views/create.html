@@ -50,12 +50,12 @@
     <div class="col-md-4 overflow-col" ng-show="selectedPrestigeClass">
       <ul class="list-unstyled component-list">
         <li data-ng-repeat="discipline in disciplines" ng-class="{hidden: !discipline.available && hideUnavailable === true}">
-          <div class="component-item pointer" ng-class="{active: discipline.selected, unavailable: !discipline.available}" ng-click="chooseDisciplineRune(discipline)">
+          <div class="component-item pointer" ng-class="{active: discipline.selected, unavailable: !discipline.available, prohibited: discipline.prohibited}" ng-click="selectDiscipline(discipline)">
             {{discipline.name}}
           </div>
         </li>
         <li data-ng-repeat="mastery in masteries" ng-class="{hidden: !mastery.available && hideUnavailable === true}">
-          <div class="component-item pointer" ng-click="choosemastery(mastery)" ng-class="{active: mastery.selected, unavailable: !mastery.available}">
+          <div class="component-item pointer" ng-click="selectMastery(mastery)" ng-class="{active: mastery.selected, unavailable: !mastery.available}">
             {{mastery.name}} ({{mastery.cost}})
           </div>
         </li>        
@@ -144,6 +144,15 @@
         <ul class="list-unstyled selected-traits">
           <li data-ng-repeat="trait in traits | orderBy: 'name'" ng-show="trait.selected">
             {{trait.name}} ({{trait.cost}})
+          </li>
+        </ul>
+      </div>  
+
+      <div class="traits">
+        <span class="selected-traits-header">Prohibited Discs</span>
+        <ul class="list-unstyled selected-traits">
+          <li data-ng-repeat="disc in prohibitedDisciplines">
+            {{disc}}
           </li>
         </ul>
       </div>  

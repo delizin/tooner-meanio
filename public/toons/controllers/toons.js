@@ -28,6 +28,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.selectedBaseClass = null;
       $scope.selectedRace = null;
       $scope.selectedTraitCategories = [];
+      $scope.prohibitedDisciplines = [];
       $scope.hideUnavailable = true;
       $scope.toonLevel = 1;
 
@@ -349,6 +350,32 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       getAvailableRunes();
     };
 
+    $scope.selectDiscipline = function(disc) {
+      if (!disc.available) {
+        growl.addWarnMessage("Discipline not available.", {ttl: 5000});
+        return false;
+      } else if (disc.prohibited) {
+        growl.addWarnMessage("Current selection prohibits you from selecting this discipline.", {ttl: 5000});
+        return false;        
+      } else {
+        if(!disc.selected) {
+          disc.selected = true;
+          if (disc.disciplinesProhibited.length > 0) $scope.prohibitedDisciplines.push.apply($scope.prohibitedDisciplines, disc.disciplinesProhibited);
+        } else {
+          disc.selected = false;
+          //Go through the prohibited discs for this discipline and remove them from the scope's prohibited list
+          if (disc.disciplinesProhibited.length > 0) {
+            disc.disciplinesProhibited.forEach(function(prohibitedDisc) {
+              var discIndex = $scope.prohibitedDisciplines.indexOf(prohibitedDisc);
+              if (discIndex !== -1) $scope.prohibitedDisciplines.splice(discIndex, 1);
+            });
+          }
+        }
+      }
+
+      getAvailableDisciplines();
+    };
+
     function checkStatRequirements(obj) {
       //First check if anything have requirements beyond current stats
       if ($scope.stats.currentStrength < obj.requiredStr) {
@@ -405,7 +432,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       });
     };
 
-    function getAvailableRunes() {
+    function getAvailableDisciplines() {
       var race = $scope.selectedRace;
       var baseClass = $scope.selectedBaseClass;
       var prestigeClass = $scope.selectedPrestigeClass;
@@ -416,11 +443,22 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
               discipline.availableRaces.indexOf(race.name) !== -1 &&
               discipline.availablePrestigeClasses.indexOf(prestigeClass.name) !== -1) {
             discipline.available = true;
+
+            if ($scope.prohibitedDisciplines.length > 0 && checkProhibitedRestriction(discipline)) {
+              discipline.prohibited = true;
+            } else {
+              discipline.prohibited = false;
+            }          
+
           } else {
             discipline.available = false;
           }
         });
       }
+    }
+
+    function getAvailableMasteries() {
+      var prestigeClass = $scope.selectedPrestigeClass;
 
       if (prestigeClass) {
         $scope.masteries.forEach(function(mastery) {
@@ -431,6 +469,11 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           }
         });
       }
+    }
+
+    function getAvailableRunes() {
+      getAvailableDisciplines();
+      getAvailableMasteries();
     };
 
     function getAvailableTraits() {
@@ -486,6 +529,14 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         return false;
       }
     }
+
+    function checkProhibitedRestriction(disc) {
+      if ($scope.prohibitedDisciplines.indexOf(disc.name) !== -1) {
+        return true;
+      } else {
+        return false;
+      }
+    }    
 
     function changeBaseStats(stat, val) {
       switch (stat) {
