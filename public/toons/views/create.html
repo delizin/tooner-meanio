@@ -39,8 +39,8 @@
 
     <div class="col-md-4 overflow-col">
       <ul class="list-unstyled component-list">
-        <li data-ng-repeat="prestigeClass in prestigeClasses">
-          <div class="component-item pointer" ng-class="{active: selectedPrestigeClass.name === prestigeClass.name}" ng-click="choosePrestigeClass(prestigeClass)">
+        <li data-ng-repeat="prestigeClass in prestigeClasses" ng-class="{hidden: !prestigeClass.available}">
+          <div class="component-item pointer" ng-class="{active: selectedPrestigeClass.name === prestigeClass.name, unavailable: !prestigeClass.available}" ng-click="choosePrestigeClass(prestigeClass)">
             {{prestigeClass.name}}
           </div>
         </li>
@@ -59,14 +59,14 @@
 
     <div class="col-md-4 overflow-col" ng-show="selectedPrestigeClass">
       <ul class="list-unstyled component-list">
-        <li data-ng-repeat="discipline in disciplines">
-          <div class="component-item pointer" ng-class="{active: discipline.selected}" ng-click="chooseDisciplineRune(discipline)">
+        <li data-ng-repeat="discipline in disciplines" ng-class="{hidden: !discipline.available && hideUnavailable === true}">
+          <div class="component-item pointer" ng-class="{active: discipline.selected, unavailable: !discipline.available}" ng-click="chooseDisciplineRune(discipline)">
             {{discipline.name}}
           </div>
         </li>
-        <li data-ng-repeat="masteryRune in masteryRunes">
-          <div class="component-item pointer" ng-click="chooseMasteryRune(masteryRune)">
-            {{masteryRune}} (5)
+        <li data-ng-repeat="mastery in masteries" ng-class="{hidden: !mastery.available && hideUnavailable === true}">
+          <div class="component-item pointer" ng-click="choosemastery(mastery)" ng-class="{active: mastery.selected, unavailable: !mastery.available}">
+            {{mastery.name}} ({{mastery.cost}})
           </div>
         </li>        
       </ul>
@@ -90,8 +90,8 @@
 
   <div class="row">
     <div class="col-md-12 text-center">
-      <button type="button" class="btn btn-lg" ng-class="toonLevel === 1 ? 'btn-primary' : 'btn-default'" ng-click="changeToonLevel(1)">Level 1</button>
-      <button type="button" ng-disabled="!selectedBaseClass" class="btn btn-lg" ng-class="toonLevel === 75 ? 'btn-primary' : 'btn-default'" ng-click="changeToonLevel(75)">Level 75</button>
+      <button type="button" class="btn btn-lg" ng-class="toonLevel === 1 ? 'btn-primary' : 'btn-default'" ng-click="chooseMinLevel()">Level 1</button>
+      <button type="button" ng-disabled="!selectedBaseClass" class="btn btn-lg" ng-class="toonLevel === 75 ? 'btn-primary' : 'btn-default'" ng-click="chooseMaxLevel()">Level 75</button>
     </div>
   </div> 
 

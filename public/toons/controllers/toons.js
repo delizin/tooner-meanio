@@ -29,7 +29,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.selectedRace = null;
       $scope.selectedTraitCategories = [];
       $scope.hideUnavailable = true;
-      $scope.toonLevel = 75;
+      $scope.toonLevel = 1;
 
       $scope.baseClasses = [{
         'name': 'Fighter',
@@ -62,7 +62,42 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       }]
     };
 
-    $scope.masteryRunes = ["Master of Axes", "Master of Daggers", "Master of Great Axes", "Master of Great Hammers", "Master of Great Swords", "Master of Hammers", "Master of Pole Arms", "Master of Spears", "Master of Staves", "Master of Swords", "Master of Throwing"]
+    $scope.masteries = [{
+      'name': 'Master of Axes',
+      'cost': 5
+    }, {
+      'name': 'Master of Daggers',
+      'cost': 5
+    }, {
+      'name': 'Master of Great Axes',
+      'cost': 5
+    }, {
+      'name': 'Master of Great Hammers',
+      'cost': 5
+    }, {
+      'name': 'Master of Great Swords',
+      'cost': 5
+    }, {
+      'name': 'Master of Hammers',
+      'cost': 5
+    }, {
+      'name': 'Master of Pole Arms',
+      'cost': 5
+    }, {
+      'name': 'Master of Spears',
+      'cost': 5
+    }, {
+      'name': 'Master of Staves',
+      'cost': 5
+    }, {
+      'name': 'Master of Swords',
+      'cost': 5
+    }, {
+      'name': 'Master of Throwing',
+      'cost': 5
+    }
+  ]
+
 
 
     $scope.create = function() {
@@ -141,9 +176,17 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       });      
     };
 
-    $scope.changeToonLevel = function(num) {
-      $scope.toonLevel = num;
+
+    $scope.chooseMinLevel = function() {
+      $scope.toonLevel = 1;
     }
+
+    $scope.chooseMaxLevel = function() {
+      $scope.toonLevel = 75;
+
+      getAvailablePrestigeClasses();
+    }
+
 
     $scope.chooseRace = function(race) {
       //First remove the currently selected race's stats
@@ -300,8 +343,10 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       });
     }
 
-    $scope.choosePrestigeClass = function(name) {
-      $scope.selectedPrestigeClass = name;
+    $scope.choosePrestigeClass = function(prestigeClass) {
+      $scope.selectedPrestigeClass = prestigeClass;
+      
+      getAvailableRunes();
     };
 
     function checkStatRequirements(obj) {
@@ -342,6 +387,50 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           baseClass.available = false;
         }
       });
+    };
+
+    function getAvailablePrestigeClasses() {
+      var race = $scope.selectedRace;
+      var baseClass = $scope.selectedBaseClass;
+
+      $scope.prestigeClasses.forEach(function(prestigeClass) {
+        if (race && baseClass) {
+          if (prestigeClass.availableBaseClasses.indexOf(baseClass.name) !== -1 && 
+              prestigeClass.availableRaces.indexOf(race.name) !== -1) {
+            prestigeClass.available = true;
+          } else {
+            prestigeClass.available = false;
+          }
+        }
+      });
+    };
+
+    function getAvailableRunes() {
+      var race = $scope.selectedRace;
+      var baseClass = $scope.selectedBaseClass;
+      var prestigeClass = $scope.selectedPrestigeClass;
+
+      if (race && baseClass && prestigeClass) {
+        $scope.disciplines.forEach(function(discipline) {
+          if (discipline.availableBaseClasses.indexOf(baseClass.name) !== -1 && 
+              discipline.availableRaces.indexOf(race.name) !== -1 &&
+              discipline.availablePrestigeClasses.indexOf(prestigeClass.name) !== -1) {
+            discipline.available = true;
+          } else {
+            discipline.available = false;
+          }
+        });
+      }
+
+      if (prestigeClass) {
+        $scope.masteries.forEach(function(mastery) {
+          if (prestigeClass.availableMasteries.indexOf(mastery.name) !== -1) {
+            mastery.available = true;            
+          } else {
+            mastery.available = false;
+          }
+        });
+      }
     };
 
     function getAvailableTraits() {
