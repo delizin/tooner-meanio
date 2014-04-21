@@ -28,6 +28,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.selectedBaseClass = null;
       $scope.selectedRace = null;
       $scope.selectedTraitCategories = [];
+      $scope.selectedStatRuneCategories = [];
       $scope.prohibitedDisciplines = [];
       $scope.hideUnavailable = true;
       $scope.toonLevel = 1;
@@ -178,11 +179,13 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     $scope.chooseMinLevel = function() {
       $scope.toonLevel = 1;
       $scope.remainingPoints -= 150;
+      $scope.maxPoints -= 150;
     }
 
     $scope.chooseMaxLevel = function() {
       $scope.toonLevel = 75;
       $scope.remainingPoints += 150;
+      $scope.maxPoints += 150;
 
       getAvailablePrestigeClasses();
     }
@@ -314,6 +317,77 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
         getAvailableTraits();
       }
+    };
+
+    //TODO: Minimum stat requirement to apply rune
+    //TODO: Remove stat runes if stats are manually lowered
+    $scope.selectStatRune = function(statRune) {
+      if (!statRune.selected) {
+        //Check if we have a rune of this category already selected
+        if ($scope.selectedStatRuneCategories.indexOf(statRune.category) !== -1) {
+          var selectedStatRune;
+          //Find the stat rune of the current category that is already selected so we can replace it
+          $scope.statRunes.forEach(function(rune) {
+            if (rune.selected && rune.category == statRune.category) {
+              selectedStatRune = rune;
+              return;
+            }
+          });
+
+          if (statRune.cost <= $scope.remainingPoints + selectedStatRune.cost) {
+            applyStatRune(statRune);
+            deselectStatRune(selectedStatRune);  
+          } else {
+            growl.addWarnMessage("Not enough points to apply " + statRune.name + " even after removing " + selectedStatRune.name, {ttl: 5000});
+          }
+          
+        }
+        else if (statRune.cost <= $scope.remainingPoints) {
+          applyStatRune(statRune);
+        } else {
+          growl.addWarnMessage("Not enough points to apply " + statRune.name, {ttl: 5000});
+        }
+      } else {
+        deselectStatRune(statRune);
+      }
+    };
+
+    function applyStatRune(statRune) {
+      statRune.selected = true;
+      $scope.remainingPoints -= statRune.cost;
+
+      changeBaseStats('strength', statRune.grantedBaseStr);
+      changeBaseStats('dexterity', statRune.grantedBaseDex);
+      changeBaseStats('constitution', statRune.grantedBaseCon);
+      changeBaseStats('intelligence', statRune.grantedBaseInt);
+      changeBaseStats('spirit', statRune.grantedBaseSpi);
+
+      changeMaxStats('strength', statRune.grantedMaxStr);
+      changeMaxStats('dexterity', statRune.grantedMaxDex);
+      changeMaxStats('constitution', statRune.grantedMaxCon);
+      changeMaxStats('intelligence', statRune.grantedMaxInt);
+      changeMaxStats('spirit', statRune.grantedMaxSpi);
+
+      $scope.selectedStatRuneCategories.push(statRune.category);
+    };
+
+    function deselectStatRune(statRune) {
+      statRune.selected = false;
+      $scope.remainingPoints += statRune.cost;
+
+      changeBaseStats('strength', statRune.grantedBaseStr * -1);
+      changeBaseStats('dexterity', statRune.grantedBaseDex * -1);
+      changeBaseStats('constitution', statRune.grantedBaseCon * -1);
+      changeBaseStats('intelligence', statRune.grantedBaseInt * -1);
+      changeBaseStats('spirit', statRune.grantedBaseSpi * -1);
+
+      changeMaxStats('strength', statRune.grantedMaxStr * -1);
+      changeMaxStats('dexterity', statRune.grantedMaxDex * -1);
+      changeMaxStats('constitution', statRune.grantedMaxCon * -1);
+      changeMaxStats('intelligence', statRune.grantedMaxInt * -1);
+      changeMaxStats('spirit', statRune.grantedMaxSpi * -1);
+
+      if (statRune.category) $scope.selectedStatRuneCategories.splice($scope.selectedStatRuneCategories.indexOf(statRune.category), 1);
     };
 
     function deselectTrait(trait) {
