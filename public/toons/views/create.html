@@ -49,16 +49,6 @@
 
     <div class="col-md-4 overflow-col" ng-show="selectedPrestigeClass">
       <ul class="list-unstyled component-list">
-        <li data-ng-repeat="statRune in statRunes">
-          <div class="component-item pointer" ng-class="{active: statRune.selected}" ng-click="chooseStatRune(statRune)">
-            {{statRune.name}} ({{statRune.cost}})
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="col-md-4 overflow-col" ng-show="selectedPrestigeClass">
-      <ul class="list-unstyled component-list">
         <li data-ng-repeat="discipline in disciplines" ng-class="{hidden: !discipline.available && hideUnavailable === true}">
           <div class="component-item pointer" ng-class="{active: discipline.selected, unavailable: !discipline.available}" ng-click="chooseDisciplineRune(discipline)">
             {{discipline.name}}
@@ -71,6 +61,16 @@
         </li>        
       </ul>
     </div>
+
+    <div class="col-md-4 overflow-col" ng-show="selectedPrestigeClass">
+      <ul class="list-unstyled component-list">
+        <li data-ng-repeat="statRune in statRunes">
+          <div class="component-item pointer" ng-class="{active: statRune.selected}" ng-click="chooseStatRune(statRune)">
+            {{statRune.name}} ({{statRune.cost}})
+          </div>
+        </li>
+      </ul>
+    </div>    
 
   </div>
   <!-- END Level 75 Row -->

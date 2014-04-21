@@ -30,7 +30,7 @@ exports.show = function(req, res) {
  * List of statRunes
  */
 exports.all = function(req, res) {
-  StatRune.find().sort('-created').exec(function(err, statRunes) {
+  StatRune.find().sort({category: 1, cost: 1}).exec(function(err, statRunes) {
     if (err) {
       res.render('error', {
         status: 500
