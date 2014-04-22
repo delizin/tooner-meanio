@@ -869,7 +869,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     };
 
     $scope.getTraitTooltip = function(trait) {
-      var tooltip = '<ul class="list-unstyled trait-tooltip">'
+      var tooltip = '<ul class="list-unstyled rune-tooltip">'
 
       tooltip += "<li>Creation Cost: " + trait.cost + "</li>";
 
@@ -900,6 +900,39 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
       if (trait.grantedBaseSpi !== 0) tooltip += "<li>Granted Base Spi: " + trait.grantedBaseSpi + "</li>";
       if (trait.grantedMaxSpi !== 0) tooltip += "<li>Granted Max Spi: " + trait.grantedMaxSpi + "</li>";
+
+      tooltip += '</ul>';
+
+      return tooltip;
+    };
+
+    $scope.getStatRuneTooltip = function(statRune) {
+      var tooltip = '<ul class="list-unstyled rune-tooltip">'
+
+      tooltip += "<li>Cost: " + statRune.cost + "</li>";
+
+      if (statRune.category) tooltip += "<li>Category: " + statRune.category;
+
+      if (statRune.requiredStr > 0) tooltip += "<li>Required Str: " + statRune.requiredStr + "</li>";
+      if (statRune.requiredDex > 0) tooltip += "<li>Required Dex: " + statRune.requiredDex + "</li>";
+      if (statRune.requiredCon > 0) tooltip += "<li>Required Con: " + statRune.requiredCon + "</li>";
+      if (statRune.requiredInt > 0) tooltip += "<li>Required Int: " + statRune.requiredInt + "</li>";
+      if (statRune.requiredSpi > 0) tooltip += "<li>Required Spi: " + statRune.requiredSpi + "</li>";
+
+      if (statRune.grantedBaseStr !== 0) tooltip += "<li>Granted Base Str: " + statRune.grantedBaseStr + "</li>";
+      if (statRune.grantedMaxStr !== 0) tooltip += "<li>Granted Max Str: " + statRune.grantedMaxStr + "</li>";
+
+      if (statRune.grantedBaseDex !== 0) tooltip += "<li>Granted Base Dex: " + statRune.grantedBaseDex + "</li>";
+      if (statRune.grantedMaxDex !== 0) tooltip += "<li>Granted Max Dex: " + statRune.grantedMaxDex + "</li>";
+
+      if (statRune.grantedBaseCon !== 0) tooltip += "<li>Granted Base Con: " + statRune.grantedBaseCon + "</li>";
+      if (statRune.grantedMaxCon !== 0) tooltip += "<li>Granted Max Con: " + statRune.grantedMaxCon + "</li>";
+
+      if (statRune.grantedBaseInt !== 0) tooltip += "<li>Granted Base Int: " + statRune.grantedBaseInt + "</li>";
+      if (statRune.grantedMaxInt !== 0) tooltip += "<li>Granted Max Int: " + statRune.grantedMaxInt + "</li>";
+
+      if (statRune.grantedBaseSpi !== 0) tooltip += "<li>Granted Base Spi: " + statRune.grantedBaseSpi + "</li>";
+      if (statRune.grantedMaxSpi !== 0) tooltip += "<li>Granted Max Spi: " + statRune.grantedMaxSpi + "</li>";
 
       tooltip += '</ul>';
 

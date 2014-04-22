@@ -64,7 +64,7 @@
 
     <div class="col-md-4 overflow-col" ng-show="selectedPrestigeClass">
       <ul class="list-unstyled component-list">
-        <li data-ng-repeat="statRune in statRunes">
+        <li data-ng-repeat="statRune in statRunes" tooltip-placement="left" tooltip-append-to-body="true" tooltip-html-unsafe="{{getStatRuneTooltip(statRune)}}">
           <div class="component-item pointer" ng-class="{active: statRune.selected, requirement: statRune.requirement}" ng-click="selectStatRune(statRune)">
             {{statRune.name}} ({{statRune.cost}})
           </div>
