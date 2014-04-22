@@ -180,6 +180,9 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.toonLevel = 1;
       $scope.remainingPoints -= 150;
       $scope.maxPoints -= 150;
+
+      unchoosePrestigeClass();
+      refundStatPoints();
     }
 
     $scope.chooseMaxLevel = function() {
@@ -322,6 +325,10 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     //TODO: Minimum stat requirement to apply rune
     //TODO: Remove stat runes if stats are manually lowered
     $scope.selectStatRune = function(statRune) {
+      if (statRune.requirement) {
+        growl.addWarnMessage(statRune.requirementMessage + " for " + statRune.name, {ttl: 5000});
+        return false;
+      }
       if (!statRune.selected) {
         //Check if we have a rune of this category already selected
         if ($scope.selectedStatRuneCategories.indexOf(statRune.category) !== -1) {
@@ -350,6 +357,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       } else {
         deselectStatRune(statRune);
       }
+
+      getAvailableStatRunes();
     };
 
     function applyStatRune(statRune) {
@@ -390,6 +399,12 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       if (statRune.category) $scope.selectedStatRuneCategories.splice($scope.selectedStatRuneCategories.indexOf(statRune.category), 1);
     };
 
+    function deselectAllStatRunes() {
+      $scope.statRunes.forEach(function(statRune) {
+        if (statRune.selected) deselectStatRune(statRune);
+      });      
+    };    
+
     function deselectTrait(trait) {
       trait.selected = false;
       $scope.remainingPoints += trait.cost;
@@ -416,9 +431,21 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     }
 
     $scope.choosePrestigeClass = function(prestigeClass) {
-      $scope.selectedPrestigeClass = prestigeClass;
-      
-      getAvailableRunes();
+      if (prestigeClass !== $scope.selectedPrestigeClass) {
+        unchoosePrestigeClass();
+        $scope.selectedPrestigeClass = prestigeClass;
+        getAvailableRunes();  
+      } else {
+        unchoosePrestigeClass();
+      }
+    };
+
+    function unchoosePrestigeClass() {
+      $scope.selectedPrestigeClass = null;
+
+      deselectAllDisciplines();
+      deselectAllStatRunes();
+      deselectAllMasteries();
     };
 
     $scope.selectDiscipline = function(disc) {
@@ -433,19 +460,29 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           disc.selected = true;
           if (disc.disciplinesProhibited.length > 0) $scope.prohibitedDisciplines.push.apply($scope.prohibitedDisciplines, disc.disciplinesProhibited);
         } else {
-          disc.selected = false;
-          //Go through the prohibited discs for this discipline and remove them from the scope's prohibited list
-          if (disc.disciplinesProhibited.length > 0) {
-            disc.disciplinesProhibited.forEach(function(prohibitedDisc) {
-              var discIndex = $scope.prohibitedDisciplines.indexOf(prohibitedDisc);
-              if (discIndex !== -1) $scope.prohibitedDisciplines.splice(discIndex, 1);
-            });
-          }
+          deselectDiscipline(disc);
         }
       }
 
       getAvailableDisciplines();
     };
+
+    function deselectDiscipline(disc) {
+      disc.selected = false;
+      //Go through the prohibited discs for this discipline and remove them from the scope's prohibited list
+      if (disc.disciplinesProhibited.length > 0) {
+        disc.disciplinesProhibited.forEach(function(prohibitedDisc) {
+          var discIndex = $scope.prohibitedDisciplines.indexOf(prohibitedDisc);
+          if (discIndex !== -1) $scope.prohibitedDisciplines.splice(discIndex, 1);
+        });
+      }
+    }
+
+    function deselectAllDisciplines() {
+      $scope.disciplines.forEach(function(discipline) {
+        if (discipline.selected) deselectDiscipline(discipline);
+      });
+    }    
 
     $scope.selectMastery = function(mastery) {
       if (!mastery.available) {
@@ -467,32 +504,42 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       }
     };
 
-    function checkStatRequirements(obj) {
+    function deselectAllMasteries() {
+      $scope.masteries.forEach(function(mastery) {
+        if (mastery.selected) {
+          mastery.selected = false;
+          $scope.remainingPoints += mastery.cost;
+        }
+      });
+    }   
+
+    function checkStatRequirements(obj, type) {
       //First check if anything have requirements beyond current stats
-      if ($scope.stats.currentStrength < obj.requiredStr) {
+      if ($scope.stats.currentStrength < obj.requiredStr)
         return {status: true, response: "Not enough Strength"};
-      } else if ($scope.stats.currentDexterity < obj.requiredDex) {
+      if ($scope.stats.currentDexterity < obj.requiredDex)
         return {status: true, response: "Not enough Dexterity"};
-      } else if ($scope.stats.currentConstitution < obj.requiredCon) {
+      if ($scope.stats.currentConstitution < obj.requiredCon)
         return {status: true, response: "Not enough Constitution"};
-      } else if ($scope.stats.currentIntelligence < obj.requiredInt) {
+      if ($scope.stats.currentIntelligence < obj.requiredInt)
         return {status: true, response: "Not enough Intelligence"};
-      } else if ($scope.stats.currentSpirit < obj.requiredSpi) {
+      if ($scope.stats.currentSpirit < obj.requiredSpi)
         return {status: true, response: "Not enough Spirit"};
-      //Then check if we need to remove currently applied rune
-      } else if (obj.selected && ($scope.stats.currentStrength - obj.grantedBaseStr) < obj.requiredStr) {
-        return {status: true, response: obj.name + " no longer meets Strength requirements and was removed."};
-      } else if (obj.selected && ($scope.stats.currentDexterity - obj.grantedBaseDex) < obj.requiredDex) {
-        return {status: true, response: obj.name + " no longer meets Dexterity requirements and was removed."};
-      } else if (obj.selected && ($scope.stats.currentConstitution - obj.grantedBaseCon) < obj.requiredCon) {
-        return {status: true, response: obj.name + " no longer meets Constitution requirements and was removed."};
-      } else if (obj.selected && ($scope.stats.currentIntelligence - obj.grantedBaseInt) < obj.requiredInt) {
-        return {status: true, response: obj.name + " no longer meets Intelligence requirements and was removed."};
-      } else if (obj.selected && ($scope.stats.currentSpirit - obj.grantedBaseSpi) < obj.requiredSpi) {
-        return {status: true, response: obj.name + " no longer meets Spirit requirements and was removed."};        
-      } else {
-        return {status: false};
+
+      if (type && type === "trait") {
+        if (obj.selected && ($scope.stats.currentStrength - obj.grantedBaseStr) < obj.requiredStr)
+          return {status: true, response: obj.name + " no longer meets Strength requirements and was removed."};
+        if (obj.selected && ($scope.stats.currentDexterity - obj.grantedBaseDex) < obj.requiredDex)
+          return {status: true, response: obj.name + " no longer meets Dexterity requirements and was removed."};
+        if (obj.selected && ($scope.stats.currentConstitution - obj.grantedBaseCon) < obj.requiredCon)
+          return {status: true, response: obj.name + " no longer meets Constitution requirements and was removed."};
+        if (obj.selected && ($scope.stats.currentIntelligence - obj.grantedBaseInt) < obj.requiredInt)
+          return {status: true, response: obj.name + " no longer meets Intelligence requirements and was removed."};
+        if (obj.selected && ($scope.stats.currentSpirit - obj.grantedBaseSpi) < obj.requiredSpi)
+          return {status: true, response: obj.name + " no longer meets Spirit requirements and was removed."};          
       }
+      
+      return {status: false};
     };
 
     function getAvailableBaseClasses() {
@@ -539,13 +586,30 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
               discipline.prohibited = true;
             } else {
               discipline.prohibited = false;
-            }          
-
+            }
           } else {
             discipline.available = false;
           }
         });
       }
+    }
+
+    function getAvailableStatRunes() {
+      $scope.statRunes.forEach(function(statRune) {
+        var requirement = checkStatRequirements(statRune);
+
+        if (!requirement.status) {
+          statRune.requirement = false;
+        } else {
+          statRune.requirement = true;
+          statRune.requirementMessage = requirement.response;
+          if (statRune.selected) {
+            growl.addWarnMessage(statRune.name + " was removed: " + statRune.requirementMessage, {ttl: 5000});
+            deselectStatRune(statRune);
+          }
+        }
+      });
+      
     }
 
     function getAvailableMasteries() {
@@ -565,6 +629,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     function getAvailableRunes() {
       getAvailableDisciplines();
       getAvailableMasteries();
+      getAvailableStatRunes();
     };
 
     function getAvailableTraits() {
@@ -583,7 +648,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           trait.available = true;
 
           //Oh we also have to check if the trait has minimum stat requirements!
-          var requirement = checkStatRequirements(trait);
+          var requirement = checkStatRequirements(trait, 'trait');
           if (!requirement.status) {
             trait.requirement = false;
           } else {
@@ -736,6 +801,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
             console.log('Error: tried to increase non-existent stat');
         }
         getAvailableTraits();
+        getAvailableStatRunes();
       }
     };
 
@@ -776,6 +842,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
             console.log('Error: tried to decrease non-existent stat');
         }
         getAvailableTraits();
+        getAvailableStatRunes();
       }
     };
 

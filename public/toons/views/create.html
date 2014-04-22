@@ -65,7 +65,7 @@
     <div class="col-md-4 overflow-col" ng-show="selectedPrestigeClass">
       <ul class="list-unstyled component-list">
         <li data-ng-repeat="statRune in statRunes">
-          <div class="component-item pointer" ng-class="{active: statRune.selected}" ng-click="selectStatRune(statRune)">
+          <div class="component-item pointer" ng-class="{active: statRune.selected, requirement: statRune.requirement}" ng-click="selectStatRune(statRune)">
             {{statRune.name}} ({{statRune.cost}})
           </div>
         </li>
@@ -81,7 +81,7 @@
         <label ng-show="selectedBaseClass && toonLevel === 1">
           <input type="checkbox" ng-model="showCheckbox" ng-change="hideUnavailable = !showCheckbox"> Show Unavailable Traits
         </label>
-        <label ng-show="toonLevel === 75">
+        <label ng-show="selectedPrestigeClass && toonLevel === 75">
           <input type="checkbox" ng-model="showCheckbox" ng-change="hideUnavailable = !showCheckbox"> Show Unavailable Runes
         </label>        
       </div>
@@ -98,6 +98,7 @@
   <div class="row">
     <div class="col-md-12">
       <h1 class="text-center">Points Remaining: {{remainingPoints}} / {{maxPoints}}</h1>
+      <h2 class="text-center">{{selectedRace.name}} {{selectedBaseClass.name}} {{selectedPrestigeClass.name}}</h2>
     </div>
   </div>  
 
@@ -140,22 +141,22 @@
     </div>
     <div class="col-md-6">
       <div class="traits">
-        <span class="selected-traits-header">Selected Traits</span>
+        <span class="selected-traits-header">Selected Runes</span>
         <ul class="list-unstyled selected-traits">
           <li data-ng-repeat="trait in traits | orderBy: 'name'" ng-show="trait.selected">
             {{trait.name}} ({{trait.cost}})
           </li>
-        </ul>
-      </div>  
-
-      <div class="traits">
-        <span class="selected-traits-header">Selected Stats</span>
-        <ul class="list-unstyled selected-traits">
+          <li data-ng-repeat="discipline in disciplines | orderBy: 'name'" ng-show="discipline.selected">
+            {{discipline.name}}
+          </li>
+          <li data-ng-repeat="mastery in masteries | orderBy: 'name'" ng-show="mastery.selected">
+            {{mastery.name}} ({{mastery.cost}})
+          </li>
           <li data-ng-repeat="statRune in statRunes | orderBy: 'name'" ng-show="statRune.selected">
             {{statRune.name}} ({{statRune.cost}})
           </li>
         </ul>
-      </div>   
+      </div>  
     </div>
   </div>
 </section>
