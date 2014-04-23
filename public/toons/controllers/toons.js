@@ -764,37 +764,37 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       }
     };
 
-    $scope.increaseStat = function(stat) {
-      if ($scope.remainingPoints > 0) {
+    $scope.increaseStat = function(stat, value) {
+      if ($scope.remainingPoints >= value) {
         switch (stat) {
           case 'strength':
-            if ($scope.stats.currentStrength < $scope.stats.maxStrength) {
-              $scope.stats.currentStrength += 1;
-              $scope.remainingPoints -= 1;
+            if ($scope.stats.currentStrength + value <= $scope.stats.maxStrength) {
+              $scope.stats.currentStrength += value;
+              $scope.remainingPoints -= value;
             }
             break;
           case 'dexterity':
-            if ($scope.stats.currentDexterity < $scope.stats.maxDexterity) {
-              $scope.stats.currentDexterity += 1;
-              $scope.remainingPoints -= 1;
+            if ($scope.stats.currentDexterity + value <= $scope.stats.maxDexterity) {
+              $scope.stats.currentDexterity += value;
+              $scope.remainingPoints -= value;
             }
             break;
           case 'constitution':
-            if ($scope.stats.currentConstitution < $scope.stats.maxConstitution) {
-              $scope.stats.currentConstitution += 1;
-              $scope.remainingPoints -= 1;
+            if ($scope.stats.currentConstitution + value <= $scope.stats.maxConstitution) {
+              $scope.stats.currentConstitution += value;
+              $scope.remainingPoints -= value;
             }
             break;
           case 'intelligence':
-            if ($scope.stats.currentIntelligence < $scope.stats.maxIntelligence) {
-              $scope.stats.currentIntelligence += 1;
-              $scope.remainingPoints -= 1; 
+            if ($scope.stats.currentIntelligence + value <= $scope.stats.maxIntelligence) {
+              $scope.stats.currentIntelligence += value;
+              $scope.remainingPoints -= value;
             }
             break;
           case 'spirit':
-            if ($scope.stats.currentSpirit < $scope.stats.maxSpirit) {
-              $scope.stats.currentSpirit += 1;
-              $scope.remainingPoints -= 1;
+            if ($scope.stats.currentSpirit + value <= $scope.stats.maxSpirit) {
+              $scope.stats.currentSpirit += value;
+              $scope.remainingPoints -= value;
             }
             break;
           default:
@@ -803,39 +803,39 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         getAvailableTraits();
         getAvailableStatRunes();
       }
-    };
+    }
 
-    $scope.decreaseStat = function(stat) {
-      if ($scope.remainingPoints < $scope.maxPoints) {
+    $scope.decreaseStat = function(stat, value) {
+      if ($scope.remainingPoints + value <= $scope.maxPoints) {
         switch (stat) {
           case 'strength':
-            if ($scope.stats.currentStrength > $scope.stats.baseStrength) {
-              $scope.stats.currentStrength -= 1;
-              $scope.remainingPoints += 1;
+            if ($scope.stats.currentStrength - value >= $scope.stats.baseStrength) {
+              $scope.stats.currentStrength -= value;
+              $scope.remainingPoints += value;
             }
             break;
           case 'dexterity':
-            if ($scope.stats.currentDexterity > $scope.stats.baseDexterity) {
-              $scope.stats.currentDexterity -= 1;
-              $scope.remainingPoints += 1;
+            if ($scope.stats.currentDexterity - value >= $scope.stats.baseDexterity) {
+              $scope.stats.currentDexterity -= value;
+              $scope.remainingPoints += value;
             }
             break;
           case 'constitution':
-            if ($scope.stats.currentConstitution > $scope.stats.baseConstitution) {
-              $scope.stats.currentConstitution -= 1;
-              $scope.remainingPoints += 1;
+            if ($scope.stats.currentConstitution - value >= $scope.stats.baseConstitution) {
+              $scope.stats.currentConstitution -= value;
+              $scope.remainingPoints += value;
             }
             break;
           case 'intelligence':
-            if ($scope.stats.currentIntelligence > $scope.stats.baseIntelligence) {
-              $scope.stats.currentIntelligence -= 1;
-              $scope.remainingPoints += 1;
+            if ($scope.stats.currentIntelligence - value >= $scope.stats.baseIntelligence) {
+              $scope.stats.currentIntelligence -= value;
+              $scope.remainingPoints += value;
             }
             break;
           case 'spirit':
-            if ($scope.stats.currentSpirit > $scope.stats.baseSpirit) {
-              $scope.stats.currentSpirit -= 1;
-              $scope.remainingPoints += 1;
+            if ($scope.stats.currentSpirit - value >= $scope.stats.baseSpirit) {
+              $scope.stats.currentSpirit -= value;
+              $scope.remainingPoints += value;
             }
             break;
           default:
@@ -844,6 +844,64 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         getAvailableTraits();
         getAvailableStatRunes();
       }
+    };
+
+    $scope.minStat = function(stat) {
+      var changeVal;
+
+      switch (stat) {
+        case 'strength':
+          changeVal = $scope.stats.currentStrength - $scope.stats.baseStrength;
+          break;
+        case 'dexterity':
+          changeVal = $scope.stats.currentDexterity - $scope.stats.baseDexterity;
+          break;
+        case 'constitution':
+          changeVal = $scope.stats.currentConstitution - $scope.stats.baseConstitution;
+          break;
+        case 'intelligence':
+          changeVal = $scope.stats.currentIntelligence - $scope.stats.baseIntelligence;
+          break;
+        case 'spirit':
+          changeVal = $scope.stats.currentSpirit - $scope.stats.baseSpirit;
+          break;
+      }
+
+      $scope.decreaseStat(stat, changeVal);
+    };
+
+    $scope.maxStat = function(stat) {
+      var changeVal, changeDiff;
+
+      switch (stat) {
+        case 'strength':
+          changeDiff = $scope.stats.maxStrength - $scope.stats.currentStrength;
+          if (changeDiff > $scope.remainingPoints) changeVal = $scope.remainingPoints;
+          else changeVal = changeDiff
+          break;
+        case 'dexterity':
+          changeDiff = $scope.stats.maxDexterity - $scope.stats.currentDexterity;
+          if (changeDiff > $scope.remainingPoints) changeVal = $scope.remainingPoints;
+          else changeVal = changeDiff;
+          break;
+        case 'constitution':
+          changeDiff =  $scope.stats.maxConstitution - $scope.stats.currentConstitution;
+          if (changeDiff > $scope.remainingPoints) changeVal = $scope.remainingPoints;
+          else changeVal = changeDiff;
+          break;
+        case 'intelligence':
+          changeDiff = $scope.stats.maxIntelligence - $scope.stats.currentIntelligence;
+          if (changeDiff > $scope.remainingPoints) changeVal = $scope.remainingPoints;
+          else changeVal = changeDiff;
+          break;
+        case 'spirit':
+          changeDiff = $scope.stats.maxSpirit - $scope.stats.currentSpirit;
+          if (changeDiff > $scope.remainingPoints) changeVal = $scope.remainingPoints;
+          else changeVal = changeDiff;
+          break;
+      }
+
+      $scope.increaseStat(stat, changeVal);
     };
 
     function refundStatPoints() {

@@ -108,33 +108,33 @@
         <ul class="list-unstyled">
           <li>
             <span class="stat-name">Strength</span>
-            <span class="stat-values">{{stats.baseStrength}}/<strong>{{stats.currentStrength}}</strong>/{{stats.maxStrength}}</span>
-            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('strength')"></span> 
-            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('strength')"></span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('strength')">{{stats.baseStrength}}</span>/<strong>{{stats.currentStrength}}</strong>/<span class="pointer" ng-click="maxStat('strength')">{{stats.maxStrength}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('strength', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('strength', 1)"></span>
           </li>
           <li>
             <span class="stat-name">Dexterity</span>
-            <span class="stat-values">{{stats.baseDexterity}}/<strong>{{stats.currentDexterity}}</strong>/{{stats.maxDexterity}}</span>
-            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('dexterity')"></span> 
-            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('dexterity')"></span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('dexterity')">{{stats.baseDexterity}}</span>/<strong>{{stats.currentDexterity}}</strong>/<span class="pointer" ng-click="maxStat('dexterity')">{{stats.maxDexterity}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('dexterity', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('dexterity', 1)"></span>
           </li>
           <li>
             <span class="stat-name">Constitution</span>
-            <span class="stat-values">{{stats.baseConstitution}}/<strong>{{stats.currentConstitution}}</strong>/{{stats.maxConstitution}}</span>
-            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('constitution')"></span> 
-            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('constitution')"></span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('constitution')">{{stats.baseConstitution}}</span>/<strong>{{stats.currentConstitution}}</strong>/<span class="pointer" ng-click="maxStat('constitution')">{{stats.maxConstitution}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('constitution', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('constitution', 1)"></span>
           </li>
           <li>
             <span class="stat-name">Intelligence</span>
-            <span class="stat-values">{{stats.baseIntelligence}}/<strong>{{stats.currentIntelligence}}</strong>/{{stats.maxIntelligence}}</span>
-            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('intelligence')"></span> 
-            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('intelligence')"></span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('intelligence')">{{stats.baseIntelligence}}</span>/<strong>{{stats.currentIntelligence}}</strong>/<span class="pointer" ng-click="maxStat('intelligence')">{{stats.maxIntelligence}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('intelligence', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('intelligence', 1)"></span>
           </li>
           <li>
             <span class="stat-name">Spirit</span>
-            <span class="stat-values">{{stats.baseSpirit}}/<strong>{{stats.currentSpirit}}</strong>/{{stats.maxSpirit}}</span>
-            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('spirit')"></span> 
-            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('spirit')"></span>
+            <span class="stat-values"><span class="pointer" ng-click="minStat('spirit')">{{stats.baseSpirit}}</span>/<strong>{{stats.currentSpirit}}</strong>/<span class="pointer" ng-click="maxStat('spirit')">{{stats.maxSpirit}}</span></span>
+            <span class="pointer glyphicon glyphicon-plus" ng-click="increaseStat('spirit', 1)"></span> 
+            <span class="pointer glyphicon glyphicon-minus" ng-click="decreaseStat('spirit', 1)"></span>
           </li>
         </ul>        
       </div>
