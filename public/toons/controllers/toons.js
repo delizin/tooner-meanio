@@ -191,8 +191,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     $scope.chooseMinLevel = function() {
       if ($scope.toonLevel !== 1) {
         $scope.toonLevel = 1;
-        $scope.remainingPoints -= 150;
-        $scope.maxPoints -= 150;
+        $scope.remainingPoints -= 205;
+        $scope.maxPoints -= 205;
 
         unchoosePrestigeClass();
         refundStatPoints();  
@@ -202,8 +202,8 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     $scope.chooseMaxLevel = function() {
       if ($scope.toonLevel !== 75) {
         $scope.toonLevel = 75;
-        $scope.remainingPoints += 150;
-        $scope.maxPoints += 150;
+        $scope.remainingPoints += 205;
+        $scope.maxPoints += 205;
 
         getAvailablePrestigeClasses();  
       }
