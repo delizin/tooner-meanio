@@ -15,68 +15,57 @@ var ToonSchema = new Schema({
       type: Date,
       default: Date.now
     },
-    title: {
-      type: String,
-      default: '',
-      trim: true
-    },
-    content: {
-      type: String,
-      default: '',
-      trim: true
-    },
     user: {
       type: Schema.ObjectId,
       ref: 'User'
     },
-    startingStatPoints: {
-      type: Number,
-      default: 55
-    },
-    endingStatPoints: {
-      type: Number,
-      default: 205
-    },
-    trainingPoints: {
-      type: Number,
-      default: -1
-    },
-    race: {
+    buildTitle: {
       type: String,
-      default: ''
+      default: '',
+      trim: true
     },
-    baseClass: {
+    buildNotes: {
       type: String,
-      default: ''
-    },
-    prestigeClass: {
-      type: String,
-      default: ''
-    },
-    startingTraits: {
-      type: Array,
-    },
-    disciplines: {
-      type: Array,
-    },
-    statRunes: {
-      type: Array,
-    },
-    masteryRunes: {
-      type: Array,
+      default: '',
+      trim: true
     },
     stats: {
       type: Object,
       default: {}
     },
+    selectedRace: {
+      type: Object,
+      default: {}
+    },
+    selectedBaseClass: {
+      type: Object,
+      default: {}
+    },
+    selectedPrestigeClass: {
+      type: Object,
+      default: {}
+    },
+    selectedTraits: {
+      type: Array,
+      default: []
+    },
+    selectedDisciplines: {
+      type: Array,
+      default: []
+    },
+    selectedMasteries: {
+      type: Array,
+      default: []
+    },
+    selectedStatRunes: {
+      type: Array,
+      default: []
+    },
+    remainingPoints: {
+      type: Number,
+      default: 0
+    }
 });
-
-/**
- * Validations
- */
-ToonSchema.path('title').validate(function(title) {
-  return title.length;
-}, 'Title cannot be blank');
 
 /**
  * Statics

@@ -27,9 +27,14 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.remainingPoints = $scope.maxPoints = 55;
       $scope.selectedBaseClass = null;
       $scope.selectedRace = null;
+      $scope.selectedPrestigeClass = null;
       $scope.selectedTraitCategories = [];
       $scope.selectedStatRuneCategories = [];
       $scope.prohibitedDisciplines = [];
+      $scope.selectedTraits = [];
+      $scope.selectedDisciplines = [];
+      $scope.selectedMasteries = [];
+      $scope.selectedStatRunes = [];
       $scope.hideUnavailable = true;
       $scope.toonLevel = 1;
 
@@ -102,15 +107,24 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     $scope.create = function() {
       var toon = new Toons({
-        title: this.title,
-        content: this.content
+        buildTitle: this.buildTitle,
+        buildNotes: this.buildNotes,
+        stats: $scope.stats,
+        selectedRace: $scope.selectedRace,
+        selectedBaseClass: $scope.selectedBaseClass,
+        selectedPrestigeClass: $scope.selectedPrestigeClass,
+        selectedTraits: $scope.selectedTraits,
+        selectedDisciplines: $scope.selectedDisciplines,
+        selectedMasteries: $scope.selectedMasteries,
+        selectedStatRunes: $scope.selectedStatRunes,
+        remainingPoints: $scope.remainingPoints
       });
+
+      console.log(toon);
+
       toon.$save(function(response) {
         $location.path('toons/' + response._id);
       });
-
-      this.title = '';
-      this.content = '';
     };
 
     $scope.remove = function(toon) {
@@ -177,21 +191,32 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
     };
 
     $scope.chooseMinLevel = function() {
-      $scope.toonLevel = 1;
-      $scope.remainingPoints -= 150;
-      $scope.maxPoints -= 150;
+      if ($scope.toonLevel !== 1) {
+        $scope.toonLevel = 1;
+        $scope.remainingPoints -= 150;
+        $scope.maxPoints -= 150;
 
-      unchoosePrestigeClass();
-      refundStatPoints();
-    }
+        unchoosePrestigeClass();
+        refundStatPoints();  
+      }
+    };
 
     $scope.chooseMaxLevel = function() {
-      $scope.toonLevel = 75;
-      $scope.remainingPoints += 150;
-      $scope.maxPoints += 150;
+      if ($scope.toonLevel !== 75) {
+        $scope.toonLevel = 75;
+        $scope.remainingPoints += 150;
+        $scope.maxPoints += 150;
 
-      getAvailablePrestigeClasses();
-    }
+        getAvailablePrestigeClasses();  
+      }
+    };
+
+    $scope.resetToon = function() {
+      if ($scope.toonLevel === 75)$scope.chooseMinLevel();
+      if ($scope.selectedRace) $scope.chooseRace($scope.selectedRace);
+      $scope.buildTitle = "";
+      $scope.buildNotes = "";
+    };
 
     $scope.chooseRace = function(race) {
       //First remove the currently selected race's stats
@@ -296,6 +321,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         if (!trait.selected) {
           if (trait.cost <= $scope.remainingPoints) {
             trait.selected = true;
+            $scope.selectedTraits.push(trait);
             $scope.remainingPoints -= trait.cost;
 
             changeBaseStats('strength', trait.grantedBaseStr);
@@ -363,6 +389,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     function applyStatRune(statRune) {
       statRune.selected = true;
+      $scope.selectedStatRunes.push(statRune);
       $scope.remainingPoints -= statRune.cost;
 
       changeBaseStats('strength', statRune.grantedBaseStr);
@@ -382,6 +409,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     function deselectStatRune(statRune) {
       statRune.selected = false;
+      $scope.selectedStatRunes.splice($scope.selectedStatRunes.indexOf(statRune), 1);
       $scope.remainingPoints += statRune.cost;
 
       changeBaseStats('strength', statRune.grantedBaseStr * -1);
@@ -407,6 +435,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     function deselectTrait(trait) {
       trait.selected = false;
+      $scope.selectedTraits.splice($scope.selectedTraits.indexOf(trait), 1);
       $scope.remainingPoints += trait.cost;
 
       changeBaseStats('strength', trait.grantedBaseStr * -1);
@@ -450,15 +479,20 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     $scope.selectDiscipline = function(disc) {
       if (!disc.available) {
-        growl.addWarnMessage("Discipline not available.", {ttl: 5000});
+        growl.addWarnMessage("Discipline not available", {ttl: 5000});
         return false;
       } else if (disc.prohibited) {
         growl.addWarnMessage("Current selection prohibits you from selecting this discipline", {ttl: 5000});
         return false;        
       } else {
         if(!disc.selected) {
-          disc.selected = true;
-          if (disc.disciplinesProhibited.length > 0) $scope.prohibitedDisciplines.push.apply($scope.prohibitedDisciplines, disc.disciplinesProhibited);
+          if ($scope.selectedDisciplines.length < 4) {
+            disc.selected = true;
+            $scope.selectedDisciplines.push(disc);
+            if (disc.disciplinesProhibited.length > 0) $scope.prohibitedDisciplines.push.apply($scope.prohibitedDisciplines, disc.disciplinesProhibited);
+          } else {
+            growl.addWarnMessage("Can only apply up to 4 disciplines", {ttl: 5000});
+          }
         } else {
           deselectDiscipline(disc);
         }
@@ -469,6 +503,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
 
     function deselectDiscipline(disc) {
       disc.selected = false;
+      $scope.selectedDisciplines.splice($scope.selectedDisciplines.indexOf(disc), 1);
       //Go through the prohibited discs for this discipline and remove them from the scope's prohibited list
       if (disc.disciplinesProhibited.length > 0) {
         disc.disciplinesProhibited.forEach(function(prohibitedDisc) {
@@ -492,6 +527,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         if(!mastery.selected) {
           if (mastery.cost <= $scope.remainingPoints) {
             mastery.selected = true;
+            $scope.selectedMasteries.push(mastery);
             $scope.remainingPoints -= mastery.cost;
           } else {
             growl.addWarnMessage("Not enough points to apply mastery", {ttl: 5000});
@@ -499,6 +535,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
           
         } else {
           mastery.selected = false;
+          $scope.selectedMasteries.splice($scope.selectedMasteries.indexOf(mastery), 1);
           $scope.remainingPoints += mastery.cost;
         }
       }
@@ -508,6 +545,7 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
       $scope.masteries.forEach(function(mastery) {
         if (mastery.selected) {
           mastery.selected = false;
+          $scope.selectedMasteries.splice($scope.selectedMasteries.indexOf(mastery), 1);
           $scope.remainingPoints += mastery.cost;
         }
       });
