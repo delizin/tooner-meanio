@@ -120,8 +120,6 @@ angular.module('mean.toons').controller('ToonsController', ['$scope', '$statePar
         remainingPoints: $scope.remainingPoints
       });
 
-      console.log(toon);
-
       toon.$save(function(response) {
         $location.path('toons/' + response._id);
       });
